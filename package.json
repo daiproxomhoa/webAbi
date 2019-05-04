@@ -1,0 +1,90 @@
+{
+  "name": "vapp-web",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@material-ui/core": "^1.5.0",
+    "@material-ui/icons": "^2.0.2",
+    "autosuggest-highlight": "^3.1.1",
+    "axios": "^0.18.0",
+    "babel-eslint": "^8.2.6",
+    "babel-polyfill": "^6.26.0",
+    "chart.js": "^2.7.2",
+    "chartjs": "^0.3.24",
+    "classnames": "^2.2.6",
+    "css-loader": "^1.0.0",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "file-loader": "^1.1.11",
+    "friendly-errors-webpack-plugin": "^1.7.0",
+    "husky": "^0.14.3",
+    "install": "^0.12.1",
+    "lint-staged": "^7.2.2",
+    "material-ui-pickers": "^1.0.0-rc.12",
+    "mini-css-extract-plugin": "^0.4.1",
+    "node-sass": "^4.11.0",
+    "npm": "^6.4.0",
+    "npm-run-all": "^4.1.3",
+    "prettier-standard": "^8.0.1",
+    "prop-types": "^15.6.2",
+    "query-string": "^6.1.0",
+    "react": "^16.3.1",
+    "react-autosuggest": "^9.3.4",
+    "react-chartjs-2": "^2.7.0",
+    "react-content-loader": "^3.1.2",
+    "react-custom-scrollbars": "^4.2.1",
+    "react-dom": "^16.3.1",
+    "react-dropzone": "^5.0.1",
+    "react-hot-loader": "^4.3.4",
+    "react-loadable": "^5.5.0",
+    "react-notifications": "^1.4.3",
+    "react-router-dom": "^4.2.2",
+    "react-scripts": "^1.1.4",
+    "react-select": "^1.2.1",
+    "react-select-material-ui": "^2.0.1",
+    "react-sidebar": "^3.0.2",
+    "react-slick": "^0.23.1",
+    "reactstrap": "^6.3.1",
+    "slick-carousel": "^1.8.1",
+    "store": "^2.0.12",
+    "weather-icons": "^1.3.2"
+  },
+  "scripts": {
+    "build-css": "node-sass src/assets/scss -o src/assets/css --output-style=compressed --source-map src/assets/css",
+    "watch-css": "npm run build-css && node-sass src/assets/scss -o src/assets/css --watch --recursive --output-style=compressed --source-map src/assets/css",
+    "start-react": "react-scripts start",
+    "start": "npm-run-all -p watch-css start-react",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "format": "prettier-standard 'src/**/*.js' 'src/**/*.jsx'",
+    "precommit": "lint-staged"
+  },
+  "devDependencies": {
+    "jquery": "^3.3.1",
+    "moment": "^2.22.2",
+    "mui-datatables": "^2.0.0-beta-21",
+    "react-intl": "^2.4.0",
+    "react-redux": "^5.0.7",
+    "redux": "^4.0.0",
+    "redux-saga": "^0.16.0",
+    "lodash.clonedeep": "^4.5.0",
+    "lodash.find": "^4.6.0",
+    "lodash.get": "^4.4.2",
+    "lodash.isequal": "^4.5.0",
+    "lodash.isundefined": "^3.0.1",
+    "lodash.memoize": "^4.1.2",
+    "lodash.merge": "^4.6.0"
+  },
+  "lint-staged": {
+    "linters": {
+      "src/**/*.jsx": [
+        "prettier-standard",
+        "git add"
+      ],
+      "src/**/*.js": [
+        "prettier-standard",
+        "git add"
+      ]
+    }
+  }
+}
