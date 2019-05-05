@@ -12,6 +12,7 @@ import Select from '../common/Select/Select'
 import Modal from '../common/Modal/Modal'
 import TimePicker from '../common/TimePicker/TimePicker'
 import {STATUS_SUCCESS} from "../../constants/Const";
+import {isEmail, isPhoneNumber} from '../../util/helpers'
 
 class UserModal extends Component {
     static propTypes = {
@@ -24,16 +25,13 @@ class UserModal extends Component {
         super(props)
         this.state = {
             open: false,
-            data: {
-
-            },
+            data: {},
             errors: {}
         }
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
         if (nextProps.open !== prevState.open) {
-            console.log(nextProps)
             return {
                 ...prevState,
                 open: nextProps.open,
@@ -42,6 +40,7 @@ class UserModal extends Component {
         }
         return null
     }
+
     // componentWillReceiveProps(nextProps) {
     //    console.log(nextProps)
     // }
@@ -52,12 +51,11 @@ class UserModal extends Component {
     }
 
     render() {
-        const {onClose, heading, organizations, ...rest} = this.props
-        const {open,data} = this.state
+        const {onClose, heading, organizations, roles, ...rest} = this.props
+        const {open, data, errors} = this.state
         return (
             <Modal
                 {...rest}
-                // loading={false}
                 className='User_Modal'
                 open={open}
                 size='lg'
@@ -73,6 +71,7 @@ class UserModal extends Component {
                                 options={organizations}
                                 isMulti={true}
                                 placeholder='Organizations'
+                                value={data.organizationIds ? data.organizationIds.map(value => value._id) : ''}
                                 onChange={e =>
                                     this.setState({
                                         ...this.state,
@@ -82,7 +81,7 @@ class UserModal extends Component {
                                         },
                                         errors: {
                                             ...this.state.errors,
-                                            roleGroupCode: ''
+                                            Organizations: ''
                                         }
                                     })
                                 }
@@ -93,7 +92,8 @@ class UserModal extends Component {
                                 className='m-t-md'
                                 label='User name'
                                 placeholder='User name'
-                                value={data.username||''}
+                                value={data.username || ''}
+                                error={!!errors.username}
                                 onChange={e =>
                                     this.setState({
                                         ...this.state,
@@ -103,7 +103,7 @@ class UserModal extends Component {
                                         },
                                         errors: {
                                             ...this.state.errors,
-                                            roleGroupCode: ''
+                                            username: ''
                                         }
                                     })
                                 }
@@ -114,6 +114,22 @@ class UserModal extends Component {
                                 className='m-t-md'
                                 label='Password'
                                 placeholder='password'
+                                type="password"
+                                error={!!errors.password}
+                                value={data.callPass || '12345678'}
+                                onChange={e =>
+                                    this.setState({
+                                        ...this.state,
+                                        data: {
+                                            ...this.state.data,
+                                            callPass: e.target.value
+                                        },
+                                        errors: {
+                                            ...this.state.errors,
+                                            password: ''
+                                        }
+                                    })
+                                }
                             />
                         </FormControl>
                         <FormControl>
@@ -121,6 +137,23 @@ class UserModal extends Component {
                                 className='m-t-md'
                                 label='Re-password'
                                 placeholder=' Re-password'
+                                type="password"
+                                error={!!errors.rePassword}
+                                value={data.callPass || '12345678'}
+                                onChange={e =>
+                                    this.setState({
+                                        ...this.state,
+                                        data: {
+                                            ...this.state.data,
+                                            callPass: e.target.value
+                                        },
+                                        errors: {
+                                            ...this.state.errors,
+                                            password: ''
+                                        }
+                                    })
+                                }
+
                             />
                         </FormControl>
                         <FormControl>
@@ -128,6 +161,21 @@ class UserModal extends Component {
                                 className='m-t-md'
                                 label='User call'
                                 placeholder='User call'
+                                error={!!errors.password}
+                                value={data.callId || ''}
+                                onChange={e =>
+                                    this.setState({
+                                        ...this.state,
+                                        data: {
+                                            ...this.state.data,
+                                            callId: e
+                                        },
+                                        errors: {
+                                            ...this.state.errors,
+                                            password: ''
+                                        }
+                                    })
+                                }
                             />
                         </FormControl>
                         <FormControl>
@@ -135,57 +183,161 @@ class UserModal extends Component {
                                 className='m-t-md'
                                 label='Password Call'
                                 placeholder='Password Call'
+                                type='password'
+                                value={data.callPass || ''}
+                                onChange={e =>
+                                    this.setState({
+                                        ...this.state,
+                                        data: {
+                                            ...this.state.data,
+                                            callPass: e
+                                        },
+                                        errors: {
+                                            ...this.state.errors,
+                                            password: ''
+                                        }
+                                    })
+                                }
                             />
                         </FormControl>
                         <FormControl className='m-t-md'>
                             <FormControlLabel
                                 label='Only use on this Vehicle'
                                 style={{marginBottom: 0}}
-                                control={<Checkbox color='primary' value='checked'/>}
+                                control={<Checkbox   color='primary' value='checked'/>}
                             />
-                            <Select placeholder='Slect vehicles' style={{marginTop: 0}} onChange={() => {
+                            <Select id='vehicles' placeholder='Slect vehicles' style={{marginTop: 0}} onChange={() => {
                             }}/>
                         </FormControl>
                     </div>
                     <div className='col-md-6'>
                         <FormControl>
-                            <Select placeholder='Group' onChange={() => {
-                            }}/>
+                            <Select placeholder='Group'
+                                    options={roles}
+                                    isMulti={true}
+                                    value={data.organizationIds ? data.organizationIds.map(value => value._id) : ''}
+                                    onChange={e =>
+                                        this.setState({
+                                            ...this.state,
+                                            data: {
+                                                ...this.state.data,
+                                                groups: e.target.value
+                                            },
+                                            errors: {
+                                                ...this.state.errors,
+                                                password: ''
+                                            }
+                                        })
+                                    }/>
                         </FormControl>
                         <FormControl>
-                            <TextField placeholder='Email' className='m-t-md' label='Email'/>
+                            <TextField placeholder='Email'
+                                       className='m-t-md'
+                                       label='Email'
+                                       error={!!errors.email}
+                                       value={data.email || ''}
+                                       onChange={e =>
+                                           this.setState({
+                                               ...this.state,
+                                               data: {
+                                                   ...this.state.data,
+                                                   email: e.target.value
+                                               },
+                                               errors: {
+                                                   ...this.state.errors,
+                                                   email: ''
+                                               }
+                                           })
+                                       }
+                            />
                         </FormControl>
                         <FormControl>
                             <TextField
                                 className='m-t-md'
                                 label='Full Name'
                                 placeholder='Full Name'
+                                error={!!errors.displayName}
+                                value={data.displayName || ''}
+                                onChange={e =>
+                                    this.setState({
+                                        ...this.state,
+                                        data: {
+                                            ...this.state.data,
+                                            displayName: e.target.value
+                                        },
+                                        errors: {
+                                            ...this.state.errors,
+                                            displayName: ''
+                                        }
+                                    })
+                                }
                             />
                         </FormControl>
                         <FormControl>
                             <TextField
-                                type='number'
+                                type='tel'
                                 label='Phone Number'
                                 className='m-t-md'
                                 placeholder='Phone Number'
+                                error={!!errors.phoneNumber}
+                                value={data.phoneNumber || ''}
+                                onChange={e =>
+                                    this.setState({
+                                        ...this.state,
+                                        data: {
+                                            ...this.state.data,
+                                            phoneNumber: e.target.value
+                                        },
+                                        errors: {
+                                            ...this.state.errors,
+                                            phoneNumber: ''
+                                        }
+                                    })
+                                }
                             />
                         </FormControl>
                         <FormControl>
                             <TimePicker
+                                id='start'
                                 placeholder='Start Time'
                                 label='Start Time'
                                 className='w-100 m-t-md'
-                                value=''
-                                onChange={time => console.log(time)}
+                                value={data.startTime||"07:30"}
+                                onChange={e =>
+                                    this.setState({
+                                        ...this.state,
+                                        data: {
+                                            ...this.state.data,
+                                            startTime: e.target.value
+                                        },
+                                        errors: {
+                                            ...this.state.errors,
+                                            startTime: ''
+                                        }
+                                    })
+                                }
                             />
                         </FormControl>
                         <FormControl>
                             <TimePicker
+                                id='close'
                                 placeholder='Close Time'
                                 className='m-t-md w-100'
                                 label='Close Time'
-                                value=''
-                                onChange={time => console.log(time)}
+                                value={data.closeTime||"17:30"}
+                                onChange={e =>
+                                    this.setState({
+                                        ...this.state,
+                                        data: {
+                                            ...this.state.data,
+                                            closeTime: e.target.value
+                                        },
+                                        errors: {
+                                            ...this.state.errors,
+                                            closeTime: ''
+                                        }
+                                    })
+                                }
                             />
                         </FormControl>
                         <FormGroup row className='m-t-md'>

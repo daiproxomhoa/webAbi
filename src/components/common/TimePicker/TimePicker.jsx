@@ -15,12 +15,12 @@ const styles = theme => ({
 })
 
 function TimePicker (props) {
-  const { classes, value, label, onChange, className, ...rest } = props
+  const { classes,id, value, label, onChange, className, ...rest } = props
   return (
     <form className={classes.container} noValidate>
       <TextField
         {...rest}
-        id='time'
+        id={id}
         label={label}
         type='time'
         className={className}

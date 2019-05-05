@@ -22,7 +22,8 @@ import {
     updateUser,
     deleteUser,
     listOrganization,
-    uploadFileUser
+    uploadFileUser,
+    listUserGroup,
 } from '../../actions'
 
 class UserList extends Component {
@@ -32,7 +33,7 @@ class UserList extends Component {
         updateUserFunc: PropTypes.func.isRequired,
         deleteUserFunc: PropTypes.func.isRequired,
         listOrgFunc: PropTypes.func.isRequired,
-
+        listUserGroupFunc: PropTypes.func.isRequired,
         status: PropTypes.object.isRequired,
         // users: PropTypes.object.isRequired,
         organizations: PropTypes.array.isRequired
@@ -59,14 +60,18 @@ class UserList extends Component {
     }
 
     componentDidMount() {
-        const {listOrgFunc, status} = this.props
+        const {listOrgFunc, status, listUserGroupFunc} = this.props
         const {currentPage, pageLimit} = this.state
         listOrgFunc({
             currentPage: currentPage,
             pageLimit: pageLimit * 100,
             orderBy: {organizationName: 1}
         })
-
+        listUserGroupFunc({
+            currentPage: 1,
+            pageLimit: 200,
+            orderBy: {createdAt: 1},
+        })
     }
 
     componentWillReceiveProps(nextProps) {
@@ -112,7 +117,7 @@ class UserList extends Component {
     }
 
     onDeleteUserGroup = (uId = ['']) => {
-        console.log(uId)
+        // console.log(uId)
         // const {deleteUserGroupFunc} = this.props
         // if (uId && window.confirm('Are you sure ? ')) {
         //     deleteUserGroupFunc({roleIds: uId})
@@ -180,7 +185,8 @@ class UserList extends Component {
 
     render() {
         const {modal, query, filter, currentPage, pageLimit} = this.state
-        const {users, status, location, organizations, totalLength, updateUserFunc, createUserFunc} = this.props
+        const {users, status, location, organizations, rolesList, totalLength, updateUserFunc, createUserFunc} = this.props
+        console.log(rolesList)
         const orgOptions = organizations.map(org => ({
             value: org._id,
             label: org.organizationName
@@ -298,6 +304,9 @@ class UserList extends Component {
                         heading='Update User Group'
                         open={modal.update}
                         data={modal.data}
+                        roles={rolesList.map((value) => {
+                            return {value: value.organizationId._id, label: value.roleGroupName+"("+value.organizationId.organizationName+")"}
+                        })}
                         okText='Update'
                         organizations={orgOptions || []}
                         onClose={() => this.setState({modal: {update: false}})}
@@ -313,6 +322,9 @@ class UserList extends Component {
                         open={modal.create}
                         organizations={orgOptions || []}
                         okText='Create'
+                        roles={rolesList.map((value) => {
+                            return {value: value.organizationId._id, label: value.roleGroupName+"("+value.organizationId.organizationName+")"}
+                        })}
                         onClose={() => this.setState({modal: {create: false}})}
                         onSubmit={data => {
                             console.log(data)
@@ -329,7 +341,7 @@ export default connect(
          organization: {
              organizations,
              users: {list, models, create, update, deleteUser, totalLength},
-
+             userGroups,
          }
      }) => ({
         users: list.ids.map(uId => models[uId]) || [],
@@ -342,9 +354,11 @@ export default connect(
             deleteUser: deleteUser.status || '',
             org: organizations.list.status
         },
+        rolesList: userGroups.list.ids.map(uId => userGroups.models[uId]),
         totalLength
     }),
     dispatch => ({
+        listUserGroupFunc: params => dispatch(listUserGroup(params)),
         listUserFunc: params => dispatch(listUser(params)),
         createUserFunc: params => dispatch(createUser(params)),
         updateUserFunc: params => dispatch(updateUser(params)),
