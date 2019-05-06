@@ -26,7 +26,8 @@ class UserModal extends Component {
         this.state = {
             open: false,
             data: {},
-            errors: {}
+            errors: {},
+            vehicles: false
         }
     }
 
@@ -52,7 +53,7 @@ class UserModal extends Component {
 
     render() {
         const {onClose, heading, organizations, roles, ...rest} = this.props
-        const {open, data, errors} = this.state
+        const {open, data, errors, vehicles} = this.state
         return (
             <Modal
                 {...rest}
@@ -116,7 +117,7 @@ class UserModal extends Component {
                                 placeholder='password'
                                 type="password"
                                 error={!!errors.password}
-                                value={data.callPass || '12345678'}
+                                value={data.callPass || ''}
                                 onChange={e =>
                                     this.setState({
                                         ...this.state,
@@ -139,7 +140,7 @@ class UserModal extends Component {
                                 placeholder=' Re-password'
                                 type="password"
                                 error={!!errors.rePassword}
-                                value={data.callPass || '12345678'}
+                                value={data.callPass || ''}
                                 onChange={e =>
                                     this.setState({
                                         ...this.state,
@@ -204,10 +205,37 @@ class UserModal extends Component {
                             <FormControlLabel
                                 label='Only use on this Vehicle'
                                 style={{marginBottom: 0}}
-                                control={<Checkbox   color='primary' value='checked'/>}
+                                control={
+                                    <Checkbox
+                                        color='primary'
+                                        checked={(!vehicles)}
+                                        onChange={(e) => {
+                                            this.setState({vehicles: !vehicles})
+                                        }}
+                                    />}
                             />
-                            <Select id='vehicles' placeholder='Slect vehicles' style={{marginTop: 0}} onChange={() => {
-                            }}/>
+                            <Select id='vehicles'
+                                    placeholder='Slect vehicles'
+                                    style={{marginTop: 0}}
+                                    isMulti={vehicles}
+                                    options={[{value: 'truck', label: 'truck'}, {
+                                        value: 'semi-truck',
+                                        label: 'semi-truck'
+                                    }, {value: 'bike', label: 'bike'}]}
+                                    value={data.driverInfo.typeOfVehicle || ''}
+                                    onChange={e =>
+                                        this.setState({
+                                            ...this.state,
+                                            data: {
+                                                ...this.state.data,
+                                                driverInfo: {
+                                                    ...this.state.data.driverInfo,
+                                                    typeOfVehicle: e
+                                                }
+                                            },
+                                        })
+                                    }
+                            />
                         </FormControl>
                     </div>
                     <div className='col-md-6'>
@@ -215,13 +243,13 @@ class UserModal extends Component {
                             <Select placeholder='Group'
                                     options={roles}
                                     isMulti={true}
-                                    value={data.organizationIds ? data.organizationIds.map(value => value._id) : ''}
+                                    value={data.organizationIds ? data.organizationIds.map(value => value._id) : data.groups}
                                     onChange={e =>
                                         this.setState({
                                             ...this.state,
                                             data: {
                                                 ...this.state.data,
-                                                groups: e.target.value
+                                                groups: e
                                             },
                                             errors: {
                                                 ...this.state.errors,
@@ -302,7 +330,7 @@ class UserModal extends Component {
                                 placeholder='Start Time'
                                 label='Start Time'
                                 className='w-100 m-t-md'
-                                value={data.startTime||"07:30"}
+                                value={data.startTime || "07:30"}
                                 onChange={e =>
                                     this.setState({
                                         ...this.state,
@@ -324,7 +352,7 @@ class UserModal extends Component {
                                 placeholder='Close Time'
                                 className='m-t-md w-100'
                                 label='Close Time'
-                                value={data.closeTime||"17:30"}
+                                value={data.closeTime || "17:30"}
                                 onChange={e =>
                                     this.setState({
                                         ...this.state,
@@ -343,16 +371,40 @@ class UserModal extends Component {
                         <FormGroup row className='m-t-md'>
                             <FormLabel component='legend'>Working Status</FormLabel>
                             <FormControlLabel
+                                control={<Radio checked={(!data.driverInfo.deactive)}
+                                                onChange={e =>
+                                                    this.setState({
+                                                        ...this.state,
+                                                        data: {
+                                                            ...this.state.data,
+                                                            driverInfo: {
+                                                                ...this.state.data.driverInfo,
+                                                                deactive: !data.driverInfo.deactive
+                                                            }
+                                                        },
+                                                    })
+                                                }
+                                />}
                                 color='primary'
                                 value='On-Work'
-                                control={<Radio/>}
-                                checked
                                 label='On-Work'
                             />
                             <FormControlLabel
-                                control={<Radio/>}
+                                control={<Radio checked={data.driverInfo.deactive}
+                                                onChange={e =>
+                                                    this.setState({
+                                                        ...this.state,
+                                                        data: {
+                                                            ...this.state.data,
+                                                            driverInfo: {
+                                                                ...this.state.data.driverInfo,
+                                                                deactive: !data.driverInfo.deactive
+                                                            }
+                                                        },
+                                                    })
+                                                }/>}
                                 color='primary'
-                                value='no'
+                                value={'On-Leave'}
                                 label='On-Leave'
                             />
                         </FormGroup>

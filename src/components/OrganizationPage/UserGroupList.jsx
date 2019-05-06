@@ -66,6 +66,7 @@ class UserGroupList extends Component {
             pageLimit: pageLimit * 100,
             orderBy: {organizationName: 1}
         })
+
     }
 
     componentWillReceiveProps(nextProps) {

@@ -6,19 +6,18 @@ import IconButton from '@material-ui/core/IconButton'
 import UpdateIcon from '@material-ui/icons/Edit'
 import DeleteIcon from '@material-ui/icons/Delete'
 import TextField from '@material-ui/core/TextField'
+import Button from '@material-ui/core/Button'
 import {Badge} from 'reactstrap'
 import {Redirect} from 'react-router-dom'
 import queryString from 'query-string'
 
 import Select from '../common/Select'
-import Select2 from '../common/Select/SelectTest'
 import UploadModal from '../UploadModal'
 import DataTable from '../common/DataTable/DataTable'
 import OrganizationModal from './OrganizationModal'
 import FloatingActionButton from '../common/FloatingActionButton/FloatingActionButton'
 import {STATUS_SUCCESS, STATUS_LOADING} from '../../constants/Const'
-import Picky from "react-picky";
-import "react-picky/dist/picky.css";
+import GoogleMapReact from 'google-map-react';
 
 import {
     listOrganization,
@@ -65,7 +64,9 @@ class OrganizationList extends Component {
                 parentOrg: []
             },
             pageLimit: 10,
-            currentPage: 0
+            currentPage: 0,
+            checkLoad: true,
+            st:''
         }
     }
 
@@ -76,17 +77,30 @@ class OrganizationList extends Component {
         this.fetch()
     }
 
-    static getDerivedStateFromProps(nextProps, prevState) {
-        if (
-            nextProps.status.upload !== prevState.modal.upload &&
-            nextProps.status.upload === STATUS_SUCCESS
-        ) {
-            return {...prevState, modal: {upload: false}}
+    componentWillReceiveProps(nextProps) {
+        const {status} = nextProps
+        const {st,checkLoad} = this.state
+        console.log(status,checkLoad,st)
+        if ( checkLoad == true && status[st]!==STATUS_LOADING) {
+
+            this.setState({checkLoad: false}, () => {
+                this.fetch()
+            })
         }
-        return null
     }
 
+    // static getDerivedStateFromProps(nextProps, prevState) {
+    //     if (
+    //         nextProps.status.upload !== prevState.modal.upload &&
+    //         nextProps.status.upload === STATUS_SUCCESS
+    //     ) {
+    //         return {...prevState, modal: {upload: false}}
+    //     }
+    //     return null
+    // }
+
     fetch = () => {
+        console.log('LOAD')
         const {listOrgFunc} = this.props
         const {filter, pageLimit, currentPage} = this.state
         const options = {}
@@ -108,31 +122,6 @@ class OrganizationList extends Component {
             ...options
         })
     }
-
-    componentDidUpdate(prevProps) {
-        // const {status: {create, update, deleteOrg}, location} = this.props
-        // if (
-        //     deleteOrg !== prevProps.status.deleteOrg &&
-        //     deleteOrg === STATUS_SUCCESS
-        // ) {
-        //     this.fetch()
-        // }
-        // if (create !== prevProps.status.create && create === STATUS_SUCCESS) {
-        //     this.setState({
-        //         modal: {create: false}
-        //     })
-        // }
-        // if (update !== prevProps.status.update && update === STATUS_SUCCESS) {
-        //     this.setState(
-        //         {
-        //             modal: {update: false}
-        //         },
-        //         this.fetch()
-        //     )
-        // }
-        // this.fetch();
-    }
-
     applyFilter = () => {
         const {filter, pageLimit} = this.state
         const query = {}
@@ -158,10 +147,9 @@ class OrganizationList extends Component {
     onDeleteOrganization = orgId => {
         const {deleteOrgFunc} = this.props
         if (window.confirm('Are you sure ? ')) {
-            deleteOrgFunc({organizationIds: [orgId]})
-            setTimeout(() => {
-                this.fetch()
-            }, 500)
+            this.setState({checkLoad: true,st:'deleteOrg'}, () => {
+                deleteOrgFunc({organizationIds: [orgId]})
+            })
         }
     }
     onDeleteOrganizationArr = arr => {
@@ -170,10 +158,9 @@ class OrganizationList extends Component {
             var deleteArr = arr.data.map((value, index) =>
                 this.props.organizations[value.index].id
             )
-            deleteOrgFunc({organizationIds: deleteArr})
-            setTimeout(() => {
-                this.fetch()
-            }, 500)
+            this.setState({checkLoad: true,st:'deleteOrg'}, () => {
+                deleteOrgFunc({organizationIds: deleteArr})
+            })
         }
     }
 
@@ -215,24 +202,25 @@ class OrganizationList extends Component {
             {name: 'Parent Organizations', options: {filter: true, sort: true}},
             {name: 'Actions', options: {filter: false, sort: false}}
         ]
-        const getOrgCategory = (categories,index) => {
-        return (
-            <div className='text-uppercase' key={index}>
-                {categories.length &&
-                categories.map((item, index1) => (
-                    <Badge color='primary' key={index1} title={item.organizationCategoryName}>
-                        {item.organizationCategoryName}
-                    </Badge>
-                ))}
-            </div>
-        )}
+        const getOrgCategory = (categories, index) => {
+            return (
+                <div className='text-uppercase' key={index}>
+                    {categories.length &&
+                    categories.map((item, index1) => (
+                        <Badge color='primary' key={index1} title={item.organizationCategoryName}>
+                            {item.organizationCategoryName}
+                        </Badge>
+                    ))}
+                </div>
+            )
+        }
 
         let dataTable = []
         if (organizations.length) {
-            dataTable = organizations.map((org,index) => [
+            dataTable = organizations.map((org, index) => [
                 org.organizationCode || '-',
                 org.organizationName || '-',
-                getOrgCategory(org.orgCategory,index) || '-',
+                getOrgCategory(org.orgCategory, index) || '-',
                 org.parentId ? org.parentId.organizationName : '-',
                 <div>
                     <Tooltip title='Edit'>
@@ -275,7 +263,7 @@ class OrganizationList extends Component {
                 <div className='filter-search m-t-xs m-b-md'>
                     <form onSubmit={() => this.applyFilter()}>
                         <div className='row'>
-                            <div className='col-md-3 col-sm-4 earch'>
+                            <div className='col-md-3 col-sm-3 earch'>
                                 <TextField
                                     placeholder='Search organization'
                                     className='w-100'
@@ -295,7 +283,7 @@ class OrganizationList extends Component {
                                     }
                                 />
                             </div>
-                            <div className='col-md-3 col-sm-4'>
+                            <div className='col-md-3 col-sm-3'>
                                 <Select
                                     placeholder='Organization Category'
                                     value={filter.orgCategory || ''}
@@ -317,7 +305,7 @@ class OrganizationList extends Component {
                                 />
 
                             </div>
-                            <div className='col-md-3 col-sm-4'>
+                            <div className='col-md-3 col-sm-3'>
                                 <Select
                                     placeholder='Parent Organization'
                                     value={filter.parentOrg || ''}
@@ -338,8 +326,21 @@ class OrganizationList extends Component {
                                     }
                                 />
                             </div>
+                            <div>
+                                <Button style={{
+                                    boxShadow: 'none',
+                                    borderRadius: 2,
+                                    height: 33,
+                                    padding: '7px 11px 7px',
+                                    backgroundColor: 'rgba(167,164,164,0.54)'
+                                }} onClick={() => {
+                                    console.log('AHIHI')
+                                }}>
+                                    <i className='far fa-map'/>
+                                </Button>
+                            </div>
                         </div>
-                        <button style={{display: 'none'}}/>
+                        <button style={{display: 'none', color: 'rgba(0,0,0,0.54)'}}/>
                     </form>
                 </div>
                 <DataTable
@@ -368,11 +369,9 @@ class OrganizationList extends Component {
                         okText='Create'
                         onClose={() => this.setState({modal: {create: false}})}
                         onSubmit={org => {
-                            this.setState({modal: {create: false}})
-                            createOrgFunc(org);
-                            setTimeout(() => {
-                                this.fetch()
-                            }, 500)
+                            this.setState({modal: {create: false},checkLoad: true,st:'create'}, () => {
+                                createOrgFunc(org);
+                            })
                         }}
                     />
                 )}
@@ -385,7 +384,11 @@ class OrganizationList extends Component {
                         orgCategories={orgCategories}
                         okText='Update'
                         onClose={() => this.setState({modal: {edit: false}})}
-                        onSubmit={newOrg => updateOrgFunc(modal.data.id, newOrg)}
+                        onSubmit={newOrg =>
+                            this.setState({modal:{update: false},checkLoad: true,st:'update'}, () => {
+                                updateOrgFunc(modal.data.id, newOrg)
+                            })
+                    }
                     />
                 )}
                 <UploadModal

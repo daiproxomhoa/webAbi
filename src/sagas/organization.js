@@ -112,7 +112,7 @@ function * deleteOrganization ({ orgId }) {
     console('deleted', deleted)
     yield put({
       type: DELETE_ORGANIZATION_SUCCESS,
-      status: deleted.status
+      status: deleted.message
     })
   } catch (error) {
     yield put({
@@ -122,6 +122,7 @@ function * deleteOrganization ({ orgId }) {
   }
 }
 function * updateOrganization ({ orgId, params }) {
+  const response = yield call(Api.Post, '/organizations/update', params)
   try {
     yield put({
       type: UPDATE_ORGANIZATION_SUCCESS,
