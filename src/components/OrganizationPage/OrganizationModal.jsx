@@ -8,7 +8,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
 import FormGroup from '@material-ui/core/FormGroup'
 import FormLabel from '@material-ui/core/FormLabel'
-
+import {NotificationManager} from 'react-notifications';
 import Select from '../common/Select/Select'
 import Modal from '../common/Modal/Modal'
 import DatePicker from '../common/DatePicker/DatePicker'
@@ -227,7 +227,7 @@ class OrganizationModal extends Component {
         open={open}
         size='lg'
         onClose={onClose}
-        onSubmit={this.submit()}
+        onSubmit={()=>this.submit()}
         heading={heading}
         loading="false"
       >

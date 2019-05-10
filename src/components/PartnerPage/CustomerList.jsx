@@ -17,7 +17,8 @@ import UploadModal from '../UploadModal'
 import {
     listOrganization,
     listPartner,
-    listCustomerGroup
+    listCustomerGroup,
+    updatePartner
 } from '../../actions'
 import {getCookie} from "../../util/helpers";
 import OrganizationModal from "../OrganizationPage/OrganizationModal";
@@ -79,7 +80,6 @@ class CustomerList extends Component {
     componentWillReceiveProps(nextProps) {
         const {st, checkLoad} = this.state
         const {status, user} = nextProps
-        console.log(user)
         if ((checkLoad == true) && status[st] == STATUS_SUCCESS) {
             this.setState({checkLoad: false}, () => {
                 this.fetchCustomer()
@@ -169,7 +169,7 @@ class CustomerList extends Component {
 
     render() {
         const {modal, query, filter, currentPage, pageLimit} = this.state
-        const {partnerList, status, location, organizations, totalLength,customerGroup} = this.props
+        const {partnerList, status, location, organizations, totalLength,customerGroup,updatePartnerFunc} = this.props
         const orgOptions = organizations.map(org => ({
             value: org._id,
             label: org.organizationName
@@ -201,7 +201,6 @@ class CustomerList extends Component {
                 this.getActions(value)
             ])
         }
-        console.log(modal.data)
         return (
             <div className='user-group-list'>
                 <div className='filter-search m-t-xs m-b-md'>
@@ -324,7 +323,10 @@ class CustomerList extends Component {
                     okText='Update'
                     onClose={() => this.setState({modal: {update: false}})}
                     onSubmit={data => {
-                        console.log(data)
+                        this.setState({modal: {update: false}, checkLoad: true, st: 'update'}, () => {
+                            updatePartnerFunc(data)
+                        })
+                        // console.log(data)
                     }
                     }
                 />
@@ -370,6 +372,7 @@ export default connect(
     }),
     dispatch => ({
         listPartnerFunc: params => dispatch(listPartner(params)),
+        updatePartnerFunc: params => dispatch(updatePartner(params)),
         listOrgFunc: params => dispatch(listOrganization(params)),
         listCustomerGroupFunc: (params, option) => dispatch(listCustomerGroup(params, option))
     })

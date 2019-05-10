@@ -8,7 +8,11 @@ import {
     LIST_CUSTOMER_GROUP_ERROR,
     LIST_CITY,
     LIST_CITY_SUCCESS,
-    LIST_CITY_ERROR
+    LIST_CITY_ERROR,
+    UPDATE_PARTNER,
+    UPDATE_PARTNER_SUCCESS,
+    UPDATE_PARTNER_ERROR,
+
 } from '../actions/types'
 
 import Api from '../util/api'
@@ -47,6 +51,24 @@ function* listCustomer({params, option}) {
     }
 }
 
+function* updateCustomer({params}) {
+    console.log(params)
+    try {
+        // Get Org
+        const response = yield call(Api.Post, '/customers/create', params)
+
+        yield put({
+            type: UPDATE_PARTNER_SUCCESS,
+            data: response.data,
+        })
+    } catch (error) {
+        yield put({
+            type: UPDATE_PARTNER_ERROR,
+            error
+        })
+    }
+}
+
 function* listCity({params}) {
     try {
         // Get Org
@@ -67,6 +89,7 @@ function* listCity({params}) {
 export default function* organizationWatcher() {
     yield takeEvery(LIST_PARTNER, listPartner)
     yield takeEvery(LIST_CUSTOMER_GROUP, listCustomer)
+    yield takeEvery(UPDATE_PARTNER, updateCustomer)
     yield takeEvery(LIST_CITY, listCity)
 
 }

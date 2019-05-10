@@ -48,6 +48,7 @@ import {
     STATUS_ERROR,
     STATUS_SUCCESS
 } from '../constants/Const'
+import {NotificationManager} from 'react-notifications';
 
 const INIT_STATE = {
     organizations: {
@@ -234,6 +235,7 @@ export default (state = INIT_STATE, action) => {
             }
         }
         case CREATE_ORGANIZATION_SUCCESS: {
+            NotificationManager.success('Created organization success', 'Success');
             return {
                 ...state,
                 organizations: {
@@ -245,6 +247,7 @@ export default (state = INIT_STATE, action) => {
             }
         }
         case CREATE_ORGANIZATION_ERROR: {
+            NotificationManager.warning('Create organization false', action.error);
             return {
                 ...state,
                 organizations: {
@@ -269,6 +272,7 @@ export default (state = INIT_STATE, action) => {
             }
         }
         case UPDATE_ORGANIZATION_SUCCESS: {
+            NotificationManager.success('Update organization success', 'Success');
             return {
                 ...state,
                 organizations: {
@@ -281,6 +285,7 @@ export default (state = INIT_STATE, action) => {
             }
         }
         case UPDATE_ORGANIZATION_ERROR: {
+            NotificationManager.warning('Update organization false', 'Error');
             return {
                 ...state,
                 organizations: {
@@ -293,6 +298,7 @@ export default (state = INIT_STATE, action) => {
             }
         }
         case DELETE_ORGANIZATION: {
+
             return {
                 ...state,
                 organizations: {
@@ -305,6 +311,7 @@ export default (state = INIT_STATE, action) => {
             }
         }
         case DELETE_ORGANIZATION_SUCCESS: {
+            NotificationManager.success('Delete organization success', 'Success');
             return {
                 ...state,
                 organizations: {
@@ -331,6 +338,7 @@ export default (state = INIT_STATE, action) => {
             }
         }
         case DELETE_ORGANIZATION_ERROR: {
+            NotificationManager.warning('Delete organization false', 'Error');
             return {
                 ...state,
                 organizations: {
@@ -478,6 +486,7 @@ export default (state = INIT_STATE, action) => {
             }
         }
         case CREATE_USER_GROUP_SUCCESS: {
+            NotificationManager.success('Created UserGroup success', 'Success');
             return {
                 ...state,
                 userGroups: {
@@ -490,6 +499,7 @@ export default (state = INIT_STATE, action) => {
             }
         }
         case CREATE_USER_GROUP_ERROR: {
+            NotificationManager.warning('Created UserGroup false', action.error);
             return {
                 ...state,
                 userGroups: {
@@ -514,6 +524,7 @@ export default (state = INIT_STATE, action) => {
             }
         }
         case UPDATE_USER_GROUP_SUCCESS: {
+            NotificationManager.success('Update UserGroup success', 'Success');
             return {
                 ...state,
                 userGroups: {
@@ -526,6 +537,7 @@ export default (state = INIT_STATE, action) => {
             }
         }
         case UPDATE_USER_GROUP_ERROR: {
+            NotificationManager.warning('Created UserGroup false', 'Success');
             return {
                 ...state,
                 userGroups: {

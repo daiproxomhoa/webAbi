@@ -28,9 +28,9 @@ export default (state = INIT_STATE, action) => {
             }
         }
         case SIGN_IN_SUCCESS: {
-            setCookie('jwtToken', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRjdGhhYmVjbyIsImVtYWlsIjoidGN0LWhhYmVjb0BnbWFpbC5jb20iLCJwaG9uZU51bWJlciI6IigrODQpIDA5MTg3NjEzNTYiLCJpZCI6IjViM2YzMjVkMDA4MjZiMzA2ODE4YTA2MyIsImV4cGlyeURhdGUiOiIyMDE5LTA2LTA2VDEzOjA0OjI4LjEwOFoiLCJpYXQiOjE1NTcyMzQyNjh9.9f4ELN12Ln6BcRtmjg2UlduhGiapalZLHXGhx_cqjh4', 4)
-            setCookie('user', JSON.stringify(action.data), 4)
             console.log(action)
+            setCookie('jwtToken', action.token, 4)
+            setCookie('user', JSON.stringify(action.data), 4)
             return {
                 ...state,
                 status: STATUS_SUCCESS,

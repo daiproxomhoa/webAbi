@@ -206,6 +206,7 @@ class IntegrationReactSelect extends React.Component {
       options,
       label,
       placeholder,
+        error,
       ...rest
     } = this.props
     const { value } = this.state
@@ -229,6 +230,7 @@ class IntegrationReactSelect extends React.Component {
             options: options,
               // isTrusted:true
           }}
+          error={error}
           onChange={(e)=>{console.log(e)}}
         />
       </FormControl>

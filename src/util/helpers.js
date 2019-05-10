@@ -31,6 +31,18 @@ export function isPhoneNumber (phone) {
   const phoneReg = /^(\(?[+]?[0-9]{0,3}\)?)(\s?)([0-9]{2,5})(\s?)([0-9]{3,5})(\s?)([0-9]{3,5})$/
   return phoneReg.test(phone)
 }
+export function isTime (time) {
+  const timeReg = /^\d{1,4}:\d{2}$/
+  return timeReg.test(time)
+}
+export function isTimewindow_partner (time) {
+  const timewindowReg = /^\d{1,2}(:\d{2})?\s*-\s*\d{1,2}:\d{2}$/
+  return timewindowReg.test(time)
+}
+export function isTimewindow (time) {
+  const timewindowReg = /^(\d{1,2}(:\d{2})?\s*-\s*\d{1,2}(:\d{2})?){1}(;\d{1,2}(:\d{2})?\s*-\s*\d{1,2}(:\d{2})?)*$/;
+  return timewindowReg.test(time)
+}
 
 export function hexToRgbA (hex, alpha) {
   var c

@@ -18,6 +18,9 @@ import LoginPage from '../components/AuthPage/LoginPage'
 import RegisterPage from '../components/AuthPage/RegisterPage'
 import MainPage from '../components/Pages'
 import {getCookie} from "../util/helpers";
+import {NotificationContainer, NotificationManager} from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
+
 
 class App extends Component {
 
@@ -45,6 +48,7 @@ class App extends Component {
                         </MainPage>
                     }
                 </Switch>
+                <NotificationContainer/>
             </RctThemeProvider>
         )
     }

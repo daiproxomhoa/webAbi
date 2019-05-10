@@ -9,11 +9,12 @@ import Modal from '../common/Modal/Modal'
 import {connect} from "react-redux";
 import {listCustomerGroup, listOrganization, listPartner, listCity} from "../../actions";
 import classnames from "classnames";
-import FormGroup from "@material-ui/core/FormGroup";
+import FormGroup from '@material-ui/core/FormGroup'
 import FormLabel from "@material-ui/core/FormLabel";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Radio from "@material-ui/core/Radio";
 import Checkbox from "@material-ui/core/Checkbox";
+import {isTime, isTimewindow_partner} from '../../util/helpers'
+import {NotificationManager} from "react-notifications";
 
 class CustomerModal extends Component {
     static propTypes = {
@@ -28,6 +29,7 @@ class CustomerModal extends Component {
             open: false,
             data: {},
             moreConfig: false,
+            errors: {}
         }
         props.listCityFunc({
             country: "vi",
@@ -50,12 +52,27 @@ class CustomerModal extends Component {
         return null
     }
 
-    submit = () => {
-        console.log("DM")
+    setWorkingDays = (e, day) => {
         const {data} = this.state
-        const {onSubmit} = this.props
-        onSubmit(data)
+        let days = data.algoConfig ? data.algoConfig.workingDays : []
+        if (e.target.checked) {
+            if ((days.length && days.indexOf(day) === -1) || !days.length) {
+                days = [...days, day]
+            }
+        } else {
+            if (days.length && days.indexOf(day) >= 0) {
+                days = days.filter(d => d !== day)
+            }
+        }
+        return this.setState({
+            ...this.state,
+            data: {
+                ...data,
+                algoConfig: {...data.algoConfig, workingDays: days}
+            }
+        })
     }
+
     fetchGroup = () => {
         const {data} = this.state
         const {listCustomerGroupFunc} = this.props
@@ -66,10 +83,55 @@ class CustomerModal extends Component {
             pageLimit: 1000
         }, 'single')
     }
+    submit = () => {
+        const {data} = this.state
+        const {onSubmit} = this.props
+        console.log(data)
+        var temp = data;
+        temp.groupIds = data.groupIds.map(value => value._id)
+        temp.cityId = data.cityId ? data.cityId._id : ''
+        temp.organizationId = data.organizationId ? data.organizationId._id : ''
+        const errors = {}
+        if (!temp.organizationId) {
+            errors.organizationId = 'Invalid organization ID'
+        }
+        if (!temp.customerCode) {
+            errors.customerCode = 'Invalid customer Code'
+        }
+        if (!temp.fullName) {
+            errors.fullName = 'Invalid full Name'
+        }
+        if (!temp.mobileNumber) {
+            errors.mobileNumber = 'Invalid Mobile Number'
+        }
+        if (temp.openTime && !isTime(temp.openTime)) {
+            errors.openTime = 'Open time must be in format HH:mm'
+        }
+        if (!temp.openTime) {
+            errors.openTime = 'Please enter open time of customer'
+        }
+        if (temp.closeTime && !isTime(temp.closeTime)) {
+            errors.openTime = 'Close time must be in format HH:mm'
+        }
+        if (!temp.closeTime) {
+            errors.closeTime = 'Please enter close time of customer'
+        }
+        if (temp.timewindow && !isTimewindow_partner(temp.timewindow)) {
+            errors.timewindow = 'Time window must be in format HH:mm-HH:mm'
+        }
+        this.setState({errors})
+        for (var e in errors) {
+            NotificationManager.warning(errors[e], 'Warning', 3000);
+        }
+        if (Object.keys(errors).length > 0) {
+            return
+        }
+        onSubmit(data)
+    }
 
     render() {
         const {onClose, heading, organizations, customerGroup, city} = this.props
-        const {open, data, moreConfig} = this.state
+        const {open, data, moreConfig, errors} = this.state
         const customerGroupOptions = customerGroup.map(e => ({
             value: e._id,
             label: e.groupName
@@ -90,6 +152,16 @@ class CustomerModal extends Component {
             {value: 'F9', label: 'F9'},
             {value: 'F10', label: 'F10'},
         ]
+        const firstWeekDayOptions = [
+            {value: 'MON', label: 'Monday'},
+            {value: 'TUE', label: 'Tuesday'},
+            {value: 'WED', label: 'Wednesday'},
+            {value: 'THU', label: 'Thursday'},
+            {value: 'FRI', label: 'Friday'},
+            {value: 'SAT', label: 'Saturday'},
+            {value: 'SUN', label: 'Sunday'}
+        ]
+        const workingDayList = [...firstWeekDayOptions]
         return (
             <Modal
                 className='Partner_Modal'
@@ -109,6 +181,7 @@ class CustomerModal extends Component {
                                 options={organizations}
                                 placeholder='Organization'
                                 value={data.organizationId ? data.organizationId._id : ''}
+                                error={!!errors.organizationId}
                                 onChange={(e) => {
                                     this.setState({
                                         ...this.state,
@@ -136,6 +209,7 @@ class CustomerModal extends Component {
                                 label='Partner Code'
                                 placeholder='Partner Code'
                                 value={data.customerCode}
+                                error={!!errors.customerCode}
                                 onChange={(e) => {
                                     this.setState({
                                         ...this.state,
@@ -174,6 +248,7 @@ class CustomerModal extends Component {
                                 label='Full name'
                                 style={{marginTop: '15px'}}
                                 value={data.fullName || ''}
+                                error={!!errors.fullName}
                                 onChange={(e) => {
                                     this.setState({
                                         ...this.state,
@@ -229,7 +304,7 @@ class CustomerModal extends Component {
                                 placeholder='Partner Group'
                                 style={{marginTop: '15px'}}
                                 options={customerGroupOptions}
-                                value={data.groupIds?data.groupIds.map(value=>value._id) :[]}
+                                value={data.groupIds ? data.groupIds.map(value => value._id) : []}
                                 onChange={(e) => {
                                     this.setState({
                                         ...this.state,
@@ -264,6 +339,7 @@ class CustomerModal extends Component {
                                 placeholder='Mobile Number'
                                 label='Mobile Number'
                                 value={data.mobileNumber || ''}
+                                error={!!errors.mobileNumber}
                                 onChange={(e) => {
                                     this.setState({
                                         ...this.state,
@@ -410,10 +486,14 @@ class CustomerModal extends Component {
                                                 label='Open Time'
                                                 placeholder='Open Time'
                                                 value={data.openTime || ''}
+                                                error={!!errors.openTime}
                                                 onChange={e =>
                                                     this.setState({
                                                         ...this.state,
-                                                        openTime: e.target.value
+                                                        data: {
+                                                            ...this.state.data,
+                                                            openTime: e.target.value
+                                                        }
                                                     })
                                                 }
 
@@ -425,7 +505,7 @@ class CustomerModal extends Component {
                                                 className='m-t-md'
                                                 label='Truck Only'
                                                 placeholder='Truck Only'
-                                                value={data.algoConfig?data.algoConfig.bikeOnly:' '}
+                                                value={data.algoConfig ? data.algoConfig.bikeOnly : ' '}
                                                 options={[{value: 'FALSE', label: 'FALSE'}, {
                                                     value: 'TRUE',
                                                     label: 'TRUE'
@@ -433,7 +513,7 @@ class CustomerModal extends Component {
                                                 onChange={(e) => {
                                                     this.setState({
                                                         ...this.state,
-                                                        data:{
+                                                        data: {
                                                             ...this.state.data,
                                                             algoConfig: {
                                                                 ...this.state.data.algoConfig,
@@ -475,10 +555,14 @@ class CustomerModal extends Component {
                                                 label='Close Time'
                                                 placeholder='Close Time'
                                                 value={data.closeTime || ''}
+                                                error={errors.closeTime}
                                                 onChange={e =>
                                                     this.setState({
                                                         ...this.state,
-                                                        closeTime: e.target.value
+                                                        data: {
+                                                            ...this.state.data,
+                                                            closeTime: e.target.value
+                                                        }
                                                     })
                                                 }
                                             />
@@ -518,7 +602,7 @@ class CustomerModal extends Component {
                                                     onChange={e =>
                                                         this.setState({
                                                             ...this.state,
-                                                            data:{
+                                                            data: {
                                                                 ...this.state.data,
                                                                 algoConfig: {
                                                                     ...this.state.data.algoConfig,
@@ -539,7 +623,7 @@ class CustomerModal extends Component {
                                                     onChange={e =>
                                                         this.setState({
                                                             ...this.state,
-                                                            data:{
+                                                            data: {
                                                                 ...this.state.data,
                                                                 algoConfig: {
                                                                     ...this.state.data.algoConfig,
@@ -560,7 +644,7 @@ class CustomerModal extends Component {
                                                     onChange={e =>
                                                         this.setState({
                                                             ...this.state,
-                                                            data:{
+                                                            data: {
                                                                 ...this.state.data,
                                                                 algoConfig: {
                                                                     ...this.state.data.algoConfig,
@@ -572,7 +656,7 @@ class CustomerModal extends Component {
                                                 />
                                             </div>
                                         </div>
-                                        <div className='row'>
+                                        <FormGroup row className='m-t-md'>
                                             <div className='col-md-6'>
                                                 <TextField
                                                     required
@@ -583,15 +667,58 @@ class CustomerModal extends Component {
                                                     onChange={e =>
                                                         this.setState({
                                                             ...this.state,
-                                                            algoConfig: {
-                                                                ...this.state.algoConfig,
-                                                                timewindow: e
+                                                            data: {
+                                                                ...this.state.data,
+                                                                taxCode: e
                                                             }
+
                                                         })
                                                     }
                                                 />
                                             </div>
-                                        </div>
+                                            <div className='col-md-6'>
+                                                <TextField
+                                                    required
+                                                    style={{marginTop: '15px'}}
+                                                    label='Invoice Address'
+                                                    placeholder='Invoice Address'
+                                                    value={data.invoiceAddress || ''}
+                                                    onChange={e =>
+                                                        this.setState({
+                                                            ...this.state,
+                                                            data: {
+                                                                ...this.state.data,
+                                                                invoiceAddress: e
+                                                            }
+
+                                                        })
+                                                    }
+                                                />
+                                            </div>
+                                        </FormGroup>
+                                        <FormGroup row className='m-t-md'>
+                                            <FormLabel component='legend'>Working Days</FormLabel>
+                                            {workingDayList.map((day, index) => (
+                                                <FormControlLabel
+                                                    key={index}
+                                                    label={day.label}
+                                                    control={
+                                                        <Checkbox
+                                                            color='primary'
+                                                            value={day.value}
+                                                            checked={
+                                                                data.algoConfig.workingDays.indexOf(
+                                                                    day.value
+                                                                ) !== -1
+                                                            }
+                                                            onChange={e =>
+                                                                this.setWorkingDays(e, day.value)
+                                                            }
+                                                        />
+                                                    }
+                                                />
+                                            ))}
+                                        </FormGroup>
                                     </div>
                                 </div>
                             </div>

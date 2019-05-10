@@ -11,10 +11,13 @@ import Api from "../util/api";
 
 function * sign_in ({ params }) {
   try {
-    const response = yield call(Api.Post, '/auth/signin', params)
+
+    const response = yield call(Api.Login, '/auth/signin', params,{})
+    const response2 = yield call(Api.Post, '/auth/signin', params,{})
     yield put({
       type: SIGN_IN_SUCCESS,
-      data:response,
+      data:response2,
+      token:response.token,
       params
     })
   } catch (error) {

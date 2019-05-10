@@ -242,7 +242,7 @@ class OrganizationList extends Component {
                 </div>
             ])
         }
-        console.log(getCenter(organizations))
+        // console.log(getCenter(organizations))
         const MapWithAMarker = withScriptjs(withGoogleMap(props =>
             <GoogleMap
                 defaultZoom={7}

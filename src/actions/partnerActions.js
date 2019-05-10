@@ -27,9 +27,9 @@ export const createPartner = params => ({
     type: CREATE_PARTNER,
     params
 })
-export const updatePartner = orgId => ({
+export const updatePartner = params => ({
     type: UPDATE_PARTNER,
-    orgId
+    params
 })
 export const deletePartner = orgId => ({
     type: DELETE_PARTNER,

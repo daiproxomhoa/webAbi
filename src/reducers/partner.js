@@ -7,7 +7,10 @@ import {
     LIST_CUSTOMER_GROUP_ERROR,
     LIST_CITY,
     LIST_CITY_SUCCESS,
-    LIST_CITY_ERROR
+    LIST_CITY_ERROR,
+    UPDATE_PARTNER,
+    UPDATE_PARTNER_SUCCESS,
+    UPDATE_PARTNER_ERROR, UPDATE_USER_GROUP, UPDATE_USER_GROUP_SUCCESS, UPDATE_USER_GROUP_ERROR
 } from '../actions/types'
 
 import {
@@ -15,6 +18,7 @@ import {
     STATUS_ERROR,
     STATUS_SUCCESS
 } from '../constants/Const'
+import {NotificationManager} from "react-notifications";
 
 const INIT_STATE = {
     partners: {
@@ -117,6 +121,44 @@ export default (state = INIT_STATE, action) => {
                 customerGroup: {
                     ...state.customerGroup,
                     status: STATUS_ERROR
+                }
+            }
+        }
+        case UPDATE_PARTNER: {
+            return {
+                ...state,
+                partners: {
+                    ...state.partners,
+                    update: {
+                        status: STATUS_LOADING,
+                        error: {}
+                    }
+                }
+            }
+        }
+        case UPDATE_PARTNER_SUCCESS: {
+            NotificationManager.success('Update partner success', 'Success');
+            return {
+                ...state,
+                partners: {
+                    ...state.partners,
+                    update: {
+                        status: STATUS_SUCCESS,
+                        error: {}
+                    }
+                }
+            }
+        }
+        case UPDATE_PARTNER_ERROR: {
+            NotificationManager.warning('Created partner false', 'Warning');
+            return {
+                ...state,
+                partners: {
+                    ...state.partners,
+                    update: {
+                        status: STATUS_ERROR,
+                        error: action.error
+                    }
                 }
             }
         }

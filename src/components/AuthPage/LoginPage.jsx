@@ -20,8 +20,10 @@ class Signin extends Component {
         this.props.singninFnc({username:this.state.email,password:this.state.password})
     }
     componentWillReceiveProps(nextProps, nextContext) {
+
             if(nextProps.status==STATUS_SUCCESS){
                 window.location='http://localhost:3000/'
+                console.log(getCookie('jwtToken'))
             }
     }
 
