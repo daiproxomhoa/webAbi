@@ -60,6 +60,7 @@ function SelectWrapped (props) {
         if (onRemove) {
           return (
             <Chip
+                style={{height:23}}
               tabIndex={-1}
               label={children}
               className={classes.chip}

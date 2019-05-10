@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import UploadModal from '../UploadModal'
 import DataTable from '../common/DataTable/DataTable'
-import PartnerModal from './PartnerModal'
+import CustomerModal from './CustomerModal'
 import FloatingActionButton from '../common/FloatingActionButton/FloatingActionButton'
 
 class PartnerList extends Component {
@@ -36,7 +36,7 @@ class PartnerList extends Component {
         </div>
         <DataTable />
 
-        <PartnerModal
+        <CustomerModal
           heading='Create Partner'
           open={modal.create}
           onClose={() => this.setState({ modal: { create: false } })}

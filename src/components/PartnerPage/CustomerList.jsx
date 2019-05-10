@@ -9,32 +9,32 @@ import UpdateIcon from '@material-ui/icons/Edit'
 import DeleteIcon from '@material-ui/icons/Delete'
 import TextField from '@material-ui/core/TextField'
 
-import {STATUS_LOADING,STATUS_SUCCESS} from '../../constants/Const'
+import {STATUS_LOADING, STATUS_SUCCESS} from '../../constants/Const'
 import Select from '../common/Select'
 import DataTable from '../common/DataTable/DataTable'
-import UserGroupModal from './UserGroupModal'
 import FloatingActionButton from '../common/FloatingActionButton/FloatingActionButton'
 import UploadModal from '../UploadModal'
 import {
-    listUserGroup,
-    createUserGroup,
-    updateUserGroup,
-    deleteUserGroup,
     listOrganization,
-    uploadFileUserGroup
+    listPartner,
+    listCustomerGroup
 } from '../../actions'
+import {getCookie} from "../../util/helpers";
+import OrganizationModal from "../OrganizationPage/OrganizationModal";
+import CustomerModal from "./CustomerModal";
+import UserModal from "../OrganizationPage/UserModal";
 
-class UserGroupList extends Component {
+class CustomerList extends Component {
     static propTypes = {
-        listUserGroupFunc: PropTypes.func.isRequired,
-        createUserGroupFunc: PropTypes.func.isRequired,
-        updateUserGroupFunc: PropTypes.func.isRequired,
-        deleteUserGroupFunc: PropTypes.func.isRequired,
-        listOrgFunc: PropTypes.func.isRequired,
-
-        status: PropTypes.object.isRequired,
-        // userGroups: PropTypes.object.isRequired,
-        organizations: PropTypes.array.isRequired
+        listPartnerFunc: PropTypes.func.isRequired,
+        // createUserGroupFunc: PropTypes.func.isRequired,
+        // updateUserGroupFunc: PropTypes.func.isRequired,
+        // deleteUserGroupFunc: PropTypes.func.isRequired,
+        // listOrgFunc: PropTypes.func.isRequired,
+        //
+        // status: PropTypes.object.isRequired,
+        // // partnerList: PropTypes.object.isRequired,
+        // organizations: PropTypes.array.isRequired
     }
 
     constructor(props) {
@@ -51,39 +51,46 @@ class UserGroupList extends Component {
                 keyword: '',
                 organization: ''
             },
+            user: JSON.parse(getCookie('user')),
             pageLimit: 10,
             currentPage: 0,
             checkLoad: true,
-            st:''
+            st: ''
         }
     }
 
     componentDidMount() {
-        const {listOrgFunc} = this.props
-        const {currentPage, pageLimit} = this.state
-        this.fetchUserGroup()
+        const {listOrgFunc,listCustomerGroupFunc} = this.props
+        const {currentPage, pageLimit, user} = this.state
+        this.fetchCustomer()
         listOrgFunc({
             currentPage: currentPage,
             pageLimit: pageLimit * 100,
-            orderBy: {organizationName: 1}
+            orderBy: {organizationName: 1},
         })
+        listCustomerGroupFunc({
+            currentPage: 1,
+            organizationIds: user.organizationIds,
+            pageLimit: 1000
+        },'all')
 
     }
 
     componentWillReceiveProps(nextProps) {
-        const {st,checkLoad}=this.state
-        const {status}=nextProps
-        if ((checkLoad == true)&&status[st]==STATUS_SUCCESS) {
+        const {st, checkLoad} = this.state
+        const {status, user} = nextProps
+        console.log(user)
+        if ((checkLoad == true) && status[st] == STATUS_SUCCESS) {
             this.setState({checkLoad: false}, () => {
-                this.fetchUserGroup()
+                this.fetchCustomer()
             })
         }
     }
 
-    fetchUserGroup = () => {
+    fetchCustomer = () => {
         console.log('Load')
-        const {listUserGroupFunc} = this.props
-        const {filter, currentPage, pageLimit} = this.state
+        const {listPartnerFunc} = this.props
+        const {filter, currentPage, pageLimit, user} = this.state
         const options = {}
 
         if (filter.keyword) {
@@ -92,134 +99,113 @@ class UserGroupList extends Component {
         if (filter.organization) {
             options.organizationIds = [filter.organization]
         }
+        if(filter.customerGroup) {
+            if (Object.keys(filter.customerGroup).length > 1) {
+                options.customerGroup = filter.customerGroup
+            }
+        }
         if (pageLimit > 1) {
             options.pageLimit = pageLimit
         }
-        listUserGroupFunc({
+        listPartnerFunc({
             currentPage: currentPage + 1,
             pageLimit: pageLimit,
             orderBy: {createdAt: 1},
+            organizationIds: user.organizationIds,
             ...options
         })
     }
 
-    onEditUserGroup = (userGroup = {}) => {
+    onEditPartner = (value = {}) => {
         this.setState({
             modal: {
                 update: true,
-                data: {...userGroup}
+                data: {...value}
             }
         })
     }
 
-    onDeleteUserGroup = (uId = ['']) => {
+    onDeletePartner = (uId = ['']) => {
         const {deleteUserGroupFunc} = this.props
         if (uId && window.confirm('Are you sure ? ')) {
-            this.setState({checkLoad:true,st:'deleteUserGroup'}, () => {
+            this.setState({checkLoad: true, st: 'deletePartner'}, () => {
                 deleteUserGroupFunc({roleIds: uId})
             })
         }
     }
-    onDeleteUserGroupArr = arr => {
+    onDeletePartnerArr = arr => {
         const {deleteUserGroupFunc} = this.props
         if (window.confirm('Are you sure ? ')) {
-            var deleteArr = arr.data.map((value, index) =>
-                this.props.userGroups[value.index]._id
-            )
-            this.setState({checkLoad: true,st:'deleteUserGroup'}, () => {
-                deleteUserGroupFunc({roleIds: deleteArr})
-            });
+            // var deleteArr = arr.data.map((value, index) =>
+            //     this.props.partnerList[value.index]._id
+            // )
+            // this.setState({checkLoad: true, st: 'deleteUserGroup'}, () => {
+            //     deleteUserGroupFunc({roleIds: deleteArr})
+            // });
         }
     }
-    getActions = userGroup => (
+    getActions = valueoup => (
         <React.Fragment>
             <Tooltip title='Edit'>
                 <IconButton
                     size='small'
-                    style={{width: '30px', height: '30px'}}
-                    onClick={() => this.onEditUserGroup(userGroup)}
+                    style={{maxWidth: '30px', height: '30px'}}
+                    onClick={() => this.onEditPartner(valueoup)}
                 >
                     <UpdateIcon/>
                 </IconButton>
             </Tooltip>
             <Tooltip title='delete'>
                 <IconButton
-                    onClick={() => this.onDeleteUserGroup([userGroup._id])}
+                    onClick={() => this.onDeletePartner([valueoup._id])}
                     size='small'
-                    style={{width: '30px', height: '30px'}}
+                    style={{maxWidth: '30px', height: '30px'}}
                 >
                     <DeleteIcon/>
                 </IconButton>
             </Tooltip>
         </React.Fragment>
     )
-    getRolesAndPerm = (perms = {}) => {
-        return (
-            <React.Fragment>
-                <ul className='roles-and-permission'>
-                    <li>
-                        <span className='text-bold'>Create: </span>
-                        {perms.insert && perms.insert.length
-                            ? perms.insert.map(r => r).join('-')
-                            : '-'}
-                    </li>
-                    <li>
-                        <span className='text-bold'>Read: </span>
-                        {perms.view && perms.view.length
-                            ? perms.view.map(r => r).join('-')
-                            : '-'}
-                    </li>
-                    <li>
-                        <span className='text-bold'>Update: </span>
-                        {perms.update && perms.update.length
-                            ? perms.update.map(r => r).join('-')
-                            : '-'}
-                    </li>
-                    <li>
-                        <span className='text-bold'>Delete: </span>
-                        {perms.delete && perms.delete
-                            ? perms.delete.map(r => r).join('-')
-                            : '-'}
-                    </li>
-                    <li>
-                        <span className='text-bold'>Delete: </span>
-                        {perms.view_all && perms.view_all.length
-                            ? perms.view_all.map(r => r).join('-')
-                            : '-'}
-                    </li>
-                </ul>
-            </React.Fragment>
-        )
-    }
 
     render() {
         const {modal, query, filter, currentPage, pageLimit} = this.state
-        const {userGroups, status, location, organizations, totalLength, updateUserGroupFunc, createUserGroupFunc} = this.props
+        const {partnerList, status, location, organizations, totalLength,customerGroup} = this.props
         const orgOptions = organizations.map(org => ({
             value: org._id,
             label: org.organizationName
         }))
+        const customerGroupOptions= customerGroup.map(org => ({
+            value: org._id,
+            label: org.groupName
+        })).reverse()
         const columns = [
-            {name: 'Group Code', options: {filter: true}},
-            {name: 'Group Name', options: {filter: true}},
-            {name: 'Organizations', options: {filter: true}},
-            {name: 'Roles and Permission', options: {filter: false}},
-            {name: 'Actions', options: {filter: false, sort: false}}
+            {name: 'Customer Code', options: {filter: true, styles: {maxWidth: '10'}}},
+            {name: 'Customer Name', options: {filter: true}},
+            {name: 'Email', options: {filter: false, sort: false}},
+            {name: 'Mobile Mumber', options: {filter: false, sort: false}},
+            {name: 'Customer Group', options: {filter: false, sort: false}},
+            {name: 'Province'},
+            {name: 'Address', options: {filter: false, sort: false}},
+            {name: 'Option', options: {filter: false, sort: false}}
         ]
         let dataTable = []
-        if (userGroups.length > 0) {
-            dataTable = userGroups.map(userGr => [
-                userGr.roleGroupCode,
-                userGr.roleGroupName,
-                userGr.organizationId.organizationName,
-                this.getRolesAndPerm(userGr.permissions[0]),
-                this.getActions(userGr),
+        if (partnerList.length > 0) {
+            dataTable = partnerList.map(value => [
+                value.customerCode,
+                value.fullName,
+                value.email,
+                value.mobileNumber,
+                (value.groupIds[0] ? value.groupIds[0].groupName : ''),
+                (value.cityId ? value.cityId.cityName : ''),
+                value.streetAddress,
+                this.getActions(value)
             ])
         }
+        console.log(modal.data)
         return (
             <div className='user-group-list'>
                 <div className='filter-search m-t-xs m-b-md'>
-                    <form onSubmit={() => this.fetchUserGroup()}>
+                    <form onSubmit={() => this.fetchCustomer()}>
                         <div className='row'>
                             <div className='col-md-2 col-sm-4 earch'>
                                 <TextField
@@ -234,7 +220,7 @@ class UserGroupList extends Component {
                                                 ...filter,
                                                 keyword: e.target.value
                                             }
-                                        }, this.fetchUserGroup)
+                                        }, this.fetchCustomer)
                                     }
                                 />
                             </div>
@@ -252,7 +238,27 @@ class UserGroupList extends Component {
                                                     organization: value
                                                 }
                                             },
-                                            this.fetchUserGroup
+                                            this.fetchCustomer
+                                        )
+                                    }
+                                />
+                            </div>
+                            <div className='col-md-2 col-sm-4 filter-organization'>
+                                <Select
+                                    isMulti={true}
+                                    placeholder='Customer group'
+                                    value={filter.customerGroup || ''}
+                                    options={customerGroupOptions}
+                                    onChange={value =>
+                                        this.setState(
+                                            ...this.state,
+                                            {
+                                                filter: {
+                                                    ...filter,
+                                                    customerGroup: value
+                                                }
+                                            },
+                                            this.fetchCustomer
                                         )
                                     }
                                 />
@@ -285,55 +291,51 @@ class UserGroupList extends Component {
                     // loading={status.list === STATUS_LOADING}
                     onChangeRowsPerPage={number =>
                         this.setState({pageLimit: number}, () => {
-                            this.fetchUserGroup()
+                            this.fetchCustomer()
                         })
                     }
                     onChangePage={
                         number => {
                             this.setState({currentPage: number}, () => {
-                                this.fetchUserGroup()
+                                this.fetchCustomer()
                             })
                         }
                     }
-                    onRowsDelete={arr => this.onDeleteUserGroupArr(arr)}
+                    onRowsDelete={arr => this.onDeletePartnerArr(arr)}
                 />
+                {modal.create && (
+                    <CustomerModal
+                        heading='Create Organization'
+                        open={modal.create}
+                        organizations={organizations}
+                        // parentOrgs={prOrgs}
+                        okText='Create'
+                        onClose={() => this.setState({modal: {create: false}})}
+                        onSubmit={org =>
+                            console.log(org)
+                        }
+                    />
+                )}{modal.update && (
+                <CustomerModal
+                    heading='Update Organization'
+                    open={modal.update}
+                    organizations={orgOptions}
+                    data={modal.data}
+                    okText='Update'
+                    onClose={() => this.setState({modal: {update: false}})}
+                    onSubmit={data => {
+                        console.log(data)
+                    }
+                    }
+                />
+            )}
                 <UploadModal
                     heading='Import User Groups'
                     open={modal.upload}
                     onClose={() => this.setState({modal: {upload: false}})}
                     onSubmit={() => console.log('import')}
                 />
-                {modal.update && (
-                    <UserGroupModal
-                        heading='Update User Group'
-                        open={modal.update}
-                        data={modal.data}
-                        okText='Update'
-                        organizations={orgOptions || []}
-                        onClose={() => this.setState({modal: {update: false}})}
-                        onSubmit={data => {
-                            this.setState({modal: {update: false}});
-                            data['roleId'] = data['_id'];
-                            this.setState({checkLoad: true,st:'update'}, () => {
-                                updateUserGroupFunc(data)
-                            });
-                        }
-                        }
-                    />
-                )}
-                {modal.create && (
-                    <UserGroupModal
-                        heading='Create User Group'
-                        open={modal.create}
-                        organizations={orgOptions || []}
-                        okText='Create'
-                        onClose={() => this.setState({modal: {create: false}})}
-                        onSubmit={data => {
-                            this.setState({modal: {create: false}});
-                            this.setState({checkLoad:true,st:'create'},()=>{ createUserGroupFunc(data)});
-                        }}
-                    />
-                )}
+
             </div>
         )
     }
@@ -341,29 +343,34 @@ class UserGroupList extends Component {
 
 export default connect(
     ({
+         partner: {
+             partners: {list, models, create, update, deletePartner, totalLength},
+             customerGroup: {list_all},
+         },
          organization: {
-             organizations,
-             userGroups: {list, models, create, update, deleteUserGroup, totalLength},
+             organizations
+         },
 
+         auth: {
+             user
          }
      }) => ({
-        userGroups: list.ids.map(uId => models[uId]) || [],
+        partnerList: list.data || [],
         organizations:
             organizations.list.ids.map(orgId => organizations.models[orgId]) || [],
         status: {
             list: list.status || '',
             create: create.status || '',
             update: update.status || '',
-            deleteUserGroup: deleteUserGroup.status || ''
+            deletePartner: deletePartner.status || ''
         },
+        user,
+        customerGroup: list_all,
         totalLength
     }),
     dispatch => ({
-        listUserGroupFunc: params => dispatch(listUserGroup(params)),
-        createUserGroupFunc: params => dispatch(createUserGroup(params)),
-        updateUserGroupFunc: params => dispatch(updateUserGroup(params)),
-        deleteUserGroupFunc: uId => dispatch(deleteUserGroup(uId)),
-        uploadFileUserGroup: file => dispatch(uploadFileUserGroup(file)),
-        listOrgFunc: params => dispatch(listOrganization(params))
+        listPartnerFunc: params => dispatch(listPartner(params)),
+        listOrgFunc: params => dispatch(listOrganization(params)),
+        listCustomerGroupFunc: (params, option) => dispatch(listCustomerGroup(params, option))
     })
-)(UserGroupList)
+)(CustomerList)

@@ -3,7 +3,7 @@ import {
   LIST_ORGANIZATION,
   DELETE_ORGANIZATION,
   UPDATE_ORGANIZATION,
-  LIST_PARENT_ORGANIZATION,
+  LIST_PARENT_ORG,
   VIEW_MAP_ORGANIZATION,
   LIST_ORG_CATEGORY,
   UPLOAD_FILE_ORG,
@@ -40,7 +40,7 @@ export const deleteOrganization = orgId => ({
 })
 
 export const listParentOrganization = params => ({
-  type: LIST_PARENT_ORGANIZATION,
+  type: LIST_PARENT_ORG,
   params
 })
 export const listOrgCategory = params => ({

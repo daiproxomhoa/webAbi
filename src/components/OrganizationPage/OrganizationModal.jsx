@@ -227,7 +227,7 @@ class OrganizationModal extends Component {
         open={open}
         size='lg'
         onClose={onClose}
-        onSubmit={() => this.submit()}
+        onSubmit={this.submit()}
         heading={heading}
         loading="false"
       >

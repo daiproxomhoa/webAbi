@@ -186,7 +186,6 @@ class UserList extends Component {
     render() {
         const {modal, query, filter, currentPage, pageLimit} = this.state
         const {users, status, location, organizations, rolesList, totalLength, updateUserFunc, createUserFunc} = this.props
-        console.log(rolesList)
         const orgOptions = organizations.map(org => ({
             value: org._id,
             label: org.organizationName

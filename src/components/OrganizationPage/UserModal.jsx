@@ -25,7 +25,9 @@ class UserModal extends Component {
         super(props)
         this.state = {
             open: false,
-            data: {},
+            data: {
+                driverInfo:{}
+            },
             errors: {},
             vehicles: false
         }
@@ -33,6 +35,7 @@ class UserModal extends Component {
 
     static getDerivedStateFromProps(nextProps, prevState) {
         if (nextProps.open !== prevState.open) {
+            nextProps.data.driverInfo={}
             return {
                 ...prevState,
                 open: nextProps.open,
@@ -46,6 +49,7 @@ class UserModal extends Component {
     //    console.log(nextProps)
     // }
     submit = () => {
+        console.log('DM')
         const {data} = this.state
         const {onSubmit} = this.props
         onSubmit(data)
@@ -61,7 +65,7 @@ class UserModal extends Component {
                 open={open}
                 size='lg'
                 heading={heading}
-                onClose={() => onClose(false)}
+                onClose={() => onClose()}
                 onSubmit={() => this.submit()}
                 loading="false"
             >
@@ -100,7 +104,7 @@ class UserModal extends Component {
                                         ...this.state,
                                         data: {
                                             ...this.state.data,
-                                            username: e
+                                            username: e.target.value
                                         },
                                         errors: {
                                             ...this.state.errors,
@@ -140,7 +144,7 @@ class UserModal extends Component {
                                 placeholder=' Re-password'
                                 type="password"
                                 error={!!errors.rePassword}
-                                value={data.callPass || ''}
+                                value={data.rePassword || ''}
                                 onChange={e =>
                                     this.setState({
                                         ...this.state,
@@ -169,7 +173,7 @@ class UserModal extends Component {
                                         ...this.state,
                                         data: {
                                             ...this.state.data,
-                                            callId: e
+                                            callId: e.target.value
                                         },
                                         errors: {
                                             ...this.state.errors,
@@ -191,7 +195,7 @@ class UserModal extends Component {
                                         ...this.state,
                                         data: {
                                             ...this.state.data,
-                                            callPass: e
+                                            callPass: e.target.value
                                         },
                                         errors: {
                                             ...this.state.errors,
@@ -258,27 +262,7 @@ class UserModal extends Component {
                                         })
                                     }/>
                         </FormControl>
-                        <FormControl>
-                            <TextField placeholder='Email'
-                                       className='m-t-md'
-                                       label='Email'
-                                       error={!!errors.email}
-                                       value={data.email || ''}
-                                       onChange={e =>
-                                           this.setState({
-                                               ...this.state,
-                                               data: {
-                                                   ...this.state.data,
-                                                   email: e.target.value
-                                               },
-                                               errors: {
-                                                   ...this.state.errors,
-                                                   email: ''
-                                               }
-                                           })
-                                       }
-                            />
-                        </FormControl>
+
                         <FormControl>
                             <TextField
                                 className='m-t-md'
@@ -299,6 +283,27 @@ class UserModal extends Component {
                                         }
                                     })
                                 }
+                            />
+                        </FormControl>
+                        <FormControl>
+                            <TextField placeholder='Email'
+                                       className='m-t-md'
+                                       label='Email'
+                                       error={!!errors.email}
+                                       value={data.email || ''}
+                                       onChange={e =>
+                                           this.setState({
+                                               ...this.state,
+                                               data: {
+                                                   ...this.state.data,
+                                                   email: e.target.value
+                                               },
+                                               errors: {
+                                                   ...this.state.errors,
+                                                   email: ''
+                                               }
+                                           })
+                                       }
                             />
                         </FormControl>
                         <FormControl>

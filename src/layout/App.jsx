@@ -2,9 +2,7 @@
  * App.js Layout Start Here
  */
 import React, {Component} from 'react'
-import {Route, Switch} from 'react-router-dom'
-
-import AuthorizedRoute from '../components/AuthorizedRoute'
+import {Route, Switch, Redirect} from 'react-router-dom'
 import RctThemeProvider from './RctThemeProvider'
 import DashboardPage from '../components/DashboardPage/DashboardPage'
 import OrganizationPage from '../components/OrganizationPage/OrganizationPage'
@@ -19,24 +17,33 @@ import ReportPage from '../components/ReportPage/ReportPage'
 import LoginPage from '../components/AuthPage/LoginPage'
 import RegisterPage from '../components/AuthPage/RegisterPage'
 import MainPage from '../components/Pages'
+import {getCookie} from "../util/helpers";
 
 class App extends Component {
+
     render() {
+        const {children} = this.props
+        const jwtToken = getCookie('jwtToken')
         return (
             <RctThemeProvider>
                 <Switch>
-                    <MainPage>
-                        <AuthorizedRoute path='/' exact component={DashboardPage}/>
-                        <AuthorizedRoute path='/organizations' component={OrganizationPage}/>
-                        <AuthorizedRoute path='/partners' component={PartnerPage}/>
-                        <AuthorizedRoute path='/products' component={ProductPage}/>
-                        <AuthorizedRoute path='/services' component={ServicePage}/>
-                        <AuthorizedRoute path='/orders' component={OrderPage}/>
-                        <AuthorizedRoute path='/transport' component={TransportPage}/>
-                        <AuthorizedRoute path='/warehouse' component={WarehousePage}/>
-                        <AuthorizedRoute path='/tasks' component={TaskPage}/>
-                        <AuthorizedRoute path='/analytical-reports' component={ReportPage}/>
-                    </MainPage>
+                    {!jwtToken ?
+
+                        <Route path='/' component={LoginPage}/>
+                        :
+                        <MainPage>
+                            <Route path='/' exact component={DashboardPage}/>
+                            <Route path='/organizations' component={OrganizationPage}/>
+                            <Route path='/partners' component={PartnerPage}/>
+                            <Route path='/products' component={ProductPage}/>
+                            <Route path='/services' component={ServicePage}/>
+                            <Route path='/orders' component={OrderPage}/>
+                            <Route path='/transport' component={TransportPage}/>
+                            <Route path='/warehouse' component={WarehousePage}/>
+                            <Route path='/tasks' component={TaskPage}/>
+                            <Route path='/analytical-reports' component={ReportPage}/>
+                        </MainPage>
+                    }
                 </Switch>
             </RctThemeProvider>
         )

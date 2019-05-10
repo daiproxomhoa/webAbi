@@ -24,7 +24,7 @@ import { collapsedSidebarAction } from '../../../actions'
 // components
 import Notifications from './Notifications'
 import MobileSearchForm from './MobileSearchForm'
-
+import {delete_cookie} from './../../../util/helpers'
 class Header extends Component {
   state = {
     customizer: false,
@@ -123,15 +123,19 @@ class Header extends Component {
                   </span>
                 </DropdownToggle>
                 <DropdownMenu>
-                  <DropdownItem tag='a' href='/profile'>
+                  <DropdownItem tag='a' href='/'>
                     Edit Profile
                   </DropdownItem>
-                  <DropdownItem tag='a' href='/profile'>
+                  <DropdownItem tag='a' href='/'>
                     Change password
                   </DropdownItem>
                   <DropdownItem divider />
-                  <DropdownItem tag='a' href='/profile'>
-                    Sign out
+                  <DropdownItem tag='a' href='/'>
+                    <div onClick={()=>{
+                      delete_cookie('jwtToken')
+                      delete_cookie('user')
+                      window.location.replace('http://localhost:3000/',200)
+                    }}>Sign out</div>
                   </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>

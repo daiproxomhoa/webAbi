@@ -40,7 +40,7 @@ import {
     DOWNLOAD_FILE_USER_GROUP_SAMPLE_ERROR,
     LIST_USER,
     LIST_USER_SUCCESS,
-    LIST_USER_ERROR,
+    LIST_USER_ERROR, LIST_PARENT_ORG, LIST_PARENT_ORG_SUCCESS, LIST_PARENT_ORG_ERROR,
 } from '../actions/types'
 
 import {
@@ -91,12 +91,20 @@ const INIT_STATE = {
         deleteUser: {}
     },
     parentOrgs: {
+        models: {},
         list: {
             status: '',
-            error: {},
-            ids: []
+            ids: [],
+            error: {}
         },
-        models: {}
+        create: {},
+        update: {},
+        deleteOrg: {
+            status: ''
+        },
+        upload: {},
+        download: {},
+        totalLength: 0
     },
     orgCategories: {
         status: '',
@@ -141,6 +149,45 @@ export default (state = INIT_STATE, action) => {
             return {
                 ...state,
                 organizations: {
+                    ...state.organizations,
+                    list: {...state.organizations.list, status: STATUS_ERROR}
+                }
+            }
+        }
+        case LIST_PARENT_ORG: {
+            return {
+                ...state,
+                parentOrgs: {
+                    ...state.organizations,
+                    list: {...state.organizations.list, status: STATUS_LOADING}
+                }
+            }
+        }
+        case LIST_PARENT_ORG_SUCCESS: {
+            return {
+                ...state,
+                parentOrgs: {
+                    ...state.organizations,
+                    list: {
+                        status: STATUS_SUCCESS,
+                        error: {},
+                        ids: action.organizations.map(org => org.id)
+                    },
+                    models: action.organizations.reduce(
+                        (list, org) => ({
+                            ...list,
+                            [org.id]: org
+                        }),
+                        {}
+                    ),
+                    totalLength: action.totalLength
+                }
+            }
+        }
+        case LIST_PARENT_ORG_ERROR: {
+            return {
+                ...state,
+                parentOrgs: {
                     ...state.organizations,
                     list: {...state.organizations.list, status: STATUS_ERROR}
                 }

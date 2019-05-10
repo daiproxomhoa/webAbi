@@ -1,4 +1,4 @@
-import { put, takeEvery } from 'redux-saga/effects'
+import { put, call, takeEvery, takeLatest } from 'redux-saga/effects'
 import {
   SIGN_IN,
   SIGN_IN_SUCCESS,
@@ -7,14 +7,14 @@ import {
   SIGN_OUT_SUCCESS,
   SIGN_OUT_ERROR
 } from '../actions/types'
+import Api from "../util/api";
 
 function * sign_in ({ params }) {
   try {
-    // TODDO LOGIN
-    const user = { name: 'son', test: '1234' }
+    const response = yield call(Api.Post, '/auth/signin', params)
     yield put({
       type: SIGN_IN_SUCCESS,
-      user,
+      data:response,
       params
     })
   } catch (error) {

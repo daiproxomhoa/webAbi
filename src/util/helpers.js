@@ -6,9 +6,22 @@ import moment from 'moment'
 /**
  * Function to convert hex to rgba
  */
-export function getCookie (name) {
-  var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'))
-  if (match) return match[2]
+export function getCookie(name) {
+  var value = "; " + document.cookie;
+  var parts = value.split("; " + name + "=");
+  if (parts.length == 2) return parts.pop().split(";").shift();
+}
+export function setCookie(name,value,days) {
+  var expires = "";
+  if (days) {
+    var date = new Date();
+    date.setTime(date.getTime() + (days*24*60*60*1000));
+    expires = "; expires=" + date.toUTCString();
+  }
+  document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+}
+export function delete_cookie( name ) {
+  document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 }
 export function isEmail (email) {
   const mailReg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -18,6 +31,7 @@ export function isPhoneNumber (phone) {
   const phoneReg = /^(\(?[+]?[0-9]{0,3}\)?)(\s?)([0-9]{2,5})(\s?)([0-9]{3,5})(\s?)([0-9]{3,5})$/
   return phoneReg.test(phone)
 }
+
 export function hexToRgbA (hex, alpha) {
   var c
   if (/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {

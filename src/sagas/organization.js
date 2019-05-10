@@ -6,6 +6,9 @@ import {
   LIST_ORGANIZATION,
   LIST_ORGANIZATION_SUCCESS,
   LIST_ORGANIZATION_ERROR,
+  LIST_PARENT_ORG,
+  LIST_PARENT_ORG_SUCCESS,
+  LIST_PARENT_ORG_ERROR,
   CREATE_ORGANIZATION,
   CREATE_ORGANIZATION_SUCCESS,
   CREATE_ORGANIZATION_ERROR,
@@ -102,6 +105,21 @@ function * listOrgCategory ({ params }) {
   } catch (error) {
     yield put({
       type: LIST_ORG_CATEGORY_ERROR,
+      error
+    })
+  }
+}
+function * listParentOrg ({ params }) {
+  try {
+    const response = yield call(Api.Post, '/organizations/list', params)
+    yield put({
+      type: LIST_PARENT_ORG_SUCCESS,
+      organizations: response.data,
+      totalLength:response.totalLength
+    })
+  } catch (error) {
+    yield put({
+      type: LIST_PARENT_ORG_ERROR,
       error
     })
   }
@@ -348,6 +366,7 @@ function * downloadSampleFileUser ({ file }) {
 export default function * organizationWatcher () {
   yield takeEvery(LIST_ORGANIZATION, listOrganization)
   yield takeEvery(LIST_ORG_CATEGORY, listOrgCategory)
+  yield takeEvery(LIST_PARENT_ORG, listParentOrg)
   yield takeLatest(DELETE_ORGANIZATION, deleteOrganization)
   yield takeLatest(CREATE_ORGANIZATION, createOrganization)
   yield takeLatest(UPDATE_ORGANIZATION, updateOrganization)

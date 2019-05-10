@@ -20,8 +20,9 @@ class Auth extends Component {
   render () {
     const { children } = this.props
     const jwtToken = getCookie('jwtToken')
+    console.log(jwtToken)
     if (!jwtToken) {
-      return window.location.replace('http://vappaccount.codev.abivin.vn', 500)
+      return window.location.replace('http://localhost:3000/',200)
     }
     if (jwtToken) {
       return <React.Fragment>{children}</React.Fragment>

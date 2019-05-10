@@ -3,17 +3,19 @@ import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 
 import MainPage from '../Pages'
+import CustomerList from './CustomerList'
 import PartnerList from './PartnerList'
 import PartnerGroupList from './PartnerGroupList'
 
-let partnerTab = 0
-let partnerGroupTab = 1
+let customer =0
+let partnerTab = 1
+let partnerGroupTab = 2
 
 class PartnerPage extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      activeTab: partnerTab
+      activeTab: customer
     }
   }
 
@@ -25,6 +27,9 @@ class PartnerPage extends React.Component {
     })
     if (value === partnerTab) {
       history.push(...location)
+    }
+    if (value === customer) {
+      history.push(...location, '#customer-list')
     }
     if (value === partnerGroupTab) {
       history.push(...location, '#partner-groups')
@@ -44,14 +49,15 @@ class PartnerPage extends React.Component {
               scrollButtons='off'
               indicatorColor='primary'
             >
+              <Tab label={<span style={{ fontSize: '14px' }}>Customer List</span>} />
               <Tab label={<span style={{ fontSize: '14px' }}>Partners</span>} />
-              <Tab
-                label={<span style={{ fontSize: '14px' }}>Partner Groups</span>}
+              <Tab label={<span style={{ fontSize: '14px' }}>Partner Groups</span>}
               />
             </Tabs>
           </div>
         </MainPage.Header>
         <MainPage.Content>
+          {activeTab === customer && <CustomerList />}
           {activeTab === partnerTab && <PartnerList />}
           {activeTab === partnerGroupTab && <PartnerGroupList />}
         </MainPage.Content>
