@@ -134,6 +134,7 @@ class OrganizationList extends Component {
         this.setState({query, pageLimit})
     }
     onEditOrganization = org => {
+
         this.setState({
             modal: {
                 update: true,

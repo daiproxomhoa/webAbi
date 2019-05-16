@@ -5,12 +5,25 @@ import {
     LIST_CUSTOMER_GROUP,
     LIST_CUSTOMER_GROUP_SUCCESS,
     LIST_CUSTOMER_GROUP_ERROR,
+    READ_CUSTOMER_GROUP,
+    READ_CUSTOMER_GROUP_SUCCESS,
+    READ_CUSTOMER_GROUP_ERROR,
     LIST_CITY,
     LIST_CITY_SUCCESS,
     LIST_CITY_ERROR,
     UPDATE_PARTNER,
     UPDATE_PARTNER_SUCCESS,
-    UPDATE_PARTNER_ERROR, UPDATE_USER_GROUP, UPDATE_USER_GROUP_SUCCESS, UPDATE_USER_GROUP_ERROR
+    UPDATE_PARTNER_ERROR,
+    DELETE_PARTNER,
+    DELETE_PARTNER_SUCCESS,
+    DELETE_PARTNER_ERROR,
+    UPDATE_CUSTOMER_GROUP,
+    UPDATE_CUSTOMER_GROUP_SUCCESS,
+    UPDATE_CUSTOMER_GROUP_ERROR,
+    CREATE_CUSTOMER_GROUP,
+    CREATE_CUSTOMER_GROUP_SUCCESS,
+    CREATE_CUSTOMER_GROUP_ERROR
+
 } from '../actions/types'
 
 import {
@@ -38,10 +51,25 @@ const INIT_STATE = {
     },
 
     customerGroup: {
-        status: '',
-        error: '',
-        list_all: [],
-        list_single: []
+        list: {
+            data: [],
+            data_single: [],
+            status: '',
+            error: ''
+        },
+        read:{
+            data: [],
+            status: '',
+            error: ''
+        },
+        create: {},
+        update: {},
+        deleteCustomerGroup: {
+            status: ''
+        },
+        upload: {},
+        download: {},
+        totalLength: 0,
     },
     city: {
         list: [],
@@ -89,28 +117,34 @@ export default (state = INIT_STATE, action) => {
                 ...state,
                 customerGroup: {
                     ...state.customerGroup,
-                    status: STATUS_LOADING
+                    list: {...state.customerGroup.list, status: STATUS_LOADING}
                 }
             }
         }
         case LIST_CUSTOMER_GROUP_SUCCESS: {
-            if (action.option == 'all') {
-                return {
-                    ...state,
-                    customerGroup: {
-                        ...state.customerGroup,
-                        list_all: action.data,
-                        status: STATUS_SUCCESS
-                    }
-                }
-            }
+
             if (action.option == 'single') {
                 return {
                     ...state,
                     customerGroup: {
                         ...state.customerGroup,
-                        list_single: action.data,
-                        status: STATUS_SUCCESS
+                        list: {
+                            ...state.customerGroup.list,
+                            data_single: action.data,
+                            status: STATUS_SUCCESS
+                        }
+                    }
+                }
+            } else {
+                return {
+                    ...state,
+                    customerGroup: {
+                        ...state.customerGroup,
+                        list: {
+                            ...state.customerGroup.list,
+                            data: action.data,
+                            status: STATUS_SUCCESS
+                        }
                     }
                 }
             }
@@ -120,9 +154,48 @@ export default (state = INIT_STATE, action) => {
                 ...state,
                 customerGroup: {
                     ...state.customerGroup,
-                    status: STATUS_ERROR
+                    list: {
+                        ...state.customerGroup.list,
+                        status: STATUS_ERROR
+                    }
                 }
             }
+
+        }
+        case READ_CUSTOMER_GROUP: {
+            return {
+                ...state,
+                customerGroup: {
+                    ...state.customerGroup,
+                    read: {...state.customerGroup.read, status: STATUS_LOADING}
+                }
+            }
+        }
+        case READ_CUSTOMER_GROUP_SUCCESS: {
+                return {
+                    ...state,
+                    customerGroup: {
+                        ...state.customerGroup,
+                        read: {
+                            ...state.customerGroup.read,
+                            data: action.data,
+                            status: STATUS_SUCCESS
+                        }
+                    }
+                }
+        }
+        case READ_CUSTOMER_GROUP_ERROR: {
+            return {
+                ...state,
+                customerGroup: {
+                    ...state.customerGroup,
+                    read: {
+                        ...state.customerGroup.read,
+                        status: STATUS_ERROR
+                    }
+                }
+            }
+
         }
         case UPDATE_PARTNER: {
             return {
@@ -150,12 +223,122 @@ export default (state = INIT_STATE, action) => {
             }
         }
         case UPDATE_PARTNER_ERROR: {
-            NotificationManager.warning('Created partner false', 'Warning');
+            NotificationManager.warning('Update partner false', 'Warning');
             return {
                 ...state,
                 partners: {
                     ...state.partners,
                     update: {
+                        status: STATUS_ERROR,
+                        error: action.error
+                    }
+                }
+            }
+        }
+        case DELETE_PARTNER: {
+            return {
+                ...state,
+                partners: {
+                    ...state.partners,
+                    deletePartner: {
+                        status: STATUS_LOADING,
+                        error: action.error
+                    }
+                }
+            }
+        }
+        case DELETE_PARTNER_SUCCESS: {
+            NotificationManager.success('Delete partner success', 'Success');
+            return {
+                ...state,
+                partners: {
+                    ...state.partners,
+                    deletePartner: {
+                        status: STATUS_SUCCESS,
+                        error: {}
+                    }
+                }
+            }
+        }
+        case DELETE_PARTNER_ERROR: {
+            NotificationManager.warning('Delete partner false', 'Warning');
+            return {
+                ...state,
+                partners: {
+                    ...state.partners,
+                    deletePartner: {
+                        status: STATUS_ERROR,
+                        error: action.error
+                    }
+                }
+            }
+        }
+        case UPDATE_CUSTOMER_GROUP: {
+            return {
+                ...state,
+                customerGroup: {
+                    ...state.customerGroup,
+                    update: {
+                        status: STATUS_LOADING,
+                    }
+                }
+            }
+        }
+        case UPDATE_CUSTOMER_GROUP_SUCCESS: {
+            NotificationManager.success('Update customer group success', 'Success');
+            return {
+                ...state,
+                customerGroup: {
+                    ...state.customerGroup,
+                    update: {
+                        status: STATUS_SUCCESS,
+                    }
+                }
+            }
+        }
+        case UPDATE_CUSTOMER_GROUP_ERROR:{
+            NotificationManager.warning('Update  customer group false', 'Warning');
+            return {
+                ...state,
+                customerGroup: {
+                    ...state.customerGroup,
+                    update: {
+                        status: STATUS_ERROR,
+                        error: action.error
+                    }
+                }
+            }
+        }
+        case CREATE_CUSTOMER_GROUP: {
+            return {
+                ...state,
+                customerGroup: {
+                    ...state.customerGroup,
+                    create: {
+                        status: STATUS_LOADING,
+                    }
+                }
+            }
+        }
+        case CREATE_CUSTOMER_GROUP_SUCCESS: {
+            NotificationManager.success('Create customer group success', 'Success');
+            return {
+                ...state,
+                customerGroup: {
+                    ...state.customerGroup,
+                    create: {
+                        status: STATUS_SUCCESS,
+                    }
+                }
+            }
+        }
+        case CREATE_CUSTOMER_GROUP_ERROR:{
+            NotificationManager.warning('Create  customer group false', 'Warning');
+            return {
+                ...state,
+                customerGroup: {
+                    ...state.customerGroup,
+                    create: {
                         status: STATUS_ERROR,
                         error: action.error
                     }

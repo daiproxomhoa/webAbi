@@ -4,18 +4,26 @@ import Tab from '@material-ui/core/Tab'
 
 import MainPage from '../Pages'
 import CustomerList from './CustomerList'
-import PartnerList from './PartnerList'
+import SuppliersList from './CustomerGroup'
 import PartnerGroupList from './PartnerGroupList'
 
 let customer =0
-let partnerTab = 1
-let partnerGroupTab = 2
+let customerGroup = 1
+let supplier = 2
 
 class PartnerPage extends React.Component {
   constructor (props) {
     super(props)
+    const { location: { hash } } = props
+    let tab = customer
+    if (hash === '#customer-group') {
+      tab = customerGroup
+    }
+    if (hash === '#suppliers') {
+      tab = supplier
+    }
     this.state = {
-      activeTab: customer
+      activeTab: tab
     }
   }
 
@@ -25,14 +33,14 @@ class PartnerPage extends React.Component {
     this.setState({
       activeTab: value
     })
-    if (value === partnerTab) {
+    if (value === customer) {
       history.push(...location)
     }
-    if (value === customer) {
-      history.push(...location, '#customer-list')
+    if (value === customerGroup) {
+      history.push(...location,'#customer-group')
     }
-    if (value === partnerGroupTab) {
-      history.push(...location, '#partner-groups')
+    if (value === supplier) {
+      history.push(...location, '#suppliers')
     }
   }
 
@@ -50,16 +58,16 @@ class PartnerPage extends React.Component {
               indicatorColor='primary'
             >
               <Tab label={<span style={{ fontSize: '14px' }}>Customer List</span>} />
-              <Tab label={<span style={{ fontSize: '14px' }}>Partners</span>} />
-              <Tab label={<span style={{ fontSize: '14px' }}>Partner Groups</span>}
+              <Tab label={<span style={{ fontSize: '14px' }}>Customer Group</span>} />
+              <Tab label={<span style={{ fontSize: '14px' }}>Suppliers</span>}
               />
             </Tabs>
           </div>
         </MainPage.Header>
         <MainPage.Content>
           {activeTab === customer && <CustomerList />}
-          {activeTab === partnerTab && <PartnerList />}
-          {activeTab === partnerGroupTab && <PartnerGroupList />}
+          {activeTab === customerGroup && <SuppliersList />}
+          {activeTab === supplier && <PartnerGroupList />}
         </MainPage.Content>
       </div>
     )

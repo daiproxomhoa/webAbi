@@ -1,6 +1,9 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import TextField from '@material-ui/core/TextField'
+import Input from '@material-ui/core/Input'
+import InputLabel from '@material-ui/core/InputLabel'
+import InputAdornment from '@material-ui/core/InputAdornment'
 import FormControl from '@material-ui/core/FormControl'
 import MenuItem from '@material-ui/core/MenuItem'
 
@@ -13,8 +16,54 @@ import FormGroup from '@material-ui/core/FormGroup'
 import FormLabel from "@material-ui/core/FormLabel";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
-import {isTime, isTimewindow_partner} from '../../util/helpers'
+import {isTime, isTimewindow_partner, isPhoneNumber, isEmail} from '../../util/helpers'
 import {NotificationManager} from "react-notifications";
+import AddIcon from '@material-ui/icons/Add';
+
+const INIT_DATA = {
+    MDP: '',
+    algoConfig: {
+        bikeOnly: "FALSE",
+        maxTime: "",
+        minTime: "",
+        supermarket: "",
+        timewindow: "",
+        truckOnly: "",
+        workingDays: []
+    },
+    // authyId: "",
+    city: "",
+    cityId: "",
+    closeTime: "",
+    comment: "",
+    coordinate: {latitude: "", longitude: ""},
+    createdAt: "",
+    customerCode: "",
+    district: "",
+    email: "",
+    emails: [],
+    fullName: "",
+    fullNameCode: "",
+    groupIds: [],
+    homeNumber: "",
+    invoiceAddress: "",
+    lastUpdatedAt: "",
+    lunchTime: "",
+    mobileNumber: "",
+    notes: [],
+    officeNumber: "",
+    openTime: "",
+    organizationId: "",
+    salesCode: "",
+    serial: [],
+    serialNumber: [],
+    species: "",
+    streetAddress: "",
+    taxCode: "",
+    title: "",
+    visitedBy: [],
+    // _id: "",
+}
 
 class CustomerModal extends Component {
     static propTypes = {
@@ -27,9 +76,12 @@ class CustomerModal extends Component {
         super(props)
         this.state = {
             open: false,
-            data: {},
+            data: {...INIT_DATA},
             moreConfig: false,
-            errors: {}
+            errors: {
+                emails: []
+            }
+
         }
         props.listCityFunc({
             country: "vi",
@@ -41,12 +93,30 @@ class CustomerModal extends Component {
         this.fetchGroup();
     }
 
+    // componentWillReceiveProps(nextProps, nextContext) {
+    //     if (nextProps.open !== this.state.open&&) {
+    //         this.setState({
+    //             data: {
+    //                 ...nextProps.data,
+    //                 organizationId: (nextProps.data.organizationId ? nextProps.data.organizationId._id : ''),
+    //                 cityId: (nextProps.data.cityId ? nextProps.data.cityId._id : ''),
+    //             },
+    //             open: nextProps.open
+    //
+    //         })
+    //     }
+    // }
+
     static getDerivedStateFromProps(nextProps, prevState) {
         if (nextProps.open !== prevState.open) {
             return {
                 ...prevState,
                 open: nextProps.open,
-                data: nextProps.data ? nextProps.data : prevState.data,
+                data: nextProps.data ? {
+                    ...nextProps.data,
+                    organizationId: (nextProps.data.organizationId ? nextProps.data.organizationId._id : ''),
+                    cityId: (nextProps.data.cityId ? nextProps.data.cityId._id : ''),
+                } : prevState.data,
             }
         }
         return null
@@ -65,7 +135,7 @@ class CustomerModal extends Component {
             }
         }
         return this.setState({
-            ...this.state,
+
             data: {
                 ...data,
                 algoConfig: {...data.algoConfig, workingDays: days}
@@ -76,21 +146,21 @@ class CustomerModal extends Component {
     fetchGroup = () => {
         const {data} = this.state
         const {listCustomerGroupFunc} = this.props
-        console.log(data)
         listCustomerGroupFunc({
             currentPage: 1,
-            organizationIds: [data.organizationId._id],
+            organizationIds: [data.organizationId || ''],
             pageLimit: 1000
         }, 'single')
     }
     submit = () => {
         const {data} = this.state
         const {onSubmit} = this.props
-        console.log(data)
         var temp = data;
-        temp.groupIds = data.groupIds.map(value => value._id)
-        temp.cityId = data.cityId ? data.cityId._id : ''
-        temp.organizationId = data.organizationId ? data.organizationId._id : ''
+        temp.groupIds = data.groupIds ? data.groupIds.map(value => value._id) : []
+        // temp.organizationId = data.organizationId ? data.organizationId._id : ''
+        temp.emails = data.emails.map(v => {
+            return {val: v}
+        })
         const errors = {}
         if (!temp.organizationId) {
             errors.organizationId = 'Invalid organization ID'
@@ -103,34 +173,53 @@ class CustomerModal extends Component {
         }
         if (!temp.mobileNumber) {
             errors.mobileNumber = 'Invalid Mobile Number'
+        } if (!temp.cityId) {
+            errors.cityId = 'Invalid city'
+        }
+        // if (temp.mobileNumber&&!isPhoneNumber(temp.mobileNumbe)) {
+        //     errors.mobileNumber = 'Mobile Number wrong format'
+        // }
+        if (!temp.openTime) {
+            errors.openTime = 'Please enter open time of customer'
         }
         if (temp.openTime && !isTime(temp.openTime)) {
             errors.openTime = 'Open time must be in format HH:mm'
         }
-        if (!temp.openTime) {
-            errors.openTime = 'Please enter open time of customer'
+        if (!temp.closeTime) {
+            errors.closeTime = 'Please enter close time of customer'
         }
         if (temp.closeTime && !isTime(temp.closeTime)) {
             errors.openTime = 'Close time must be in format HH:mm'
         }
-        if (!temp.closeTime) {
-            errors.closeTime = 'Please enter close time of customer'
+        if (temp.algoConfig) {
+            if (temp.algoConfig.timewindow && !isTimewindow_partner(temp.algoConfig.timewindow)) {
+                errors.timewindow = 'Time window must be in format HH:mm-HH:mm'
+            }
         }
-        if (temp.timewindow && !isTimewindow_partner(temp.timewindow)) {
-            errors.timewindow = 'Time window must be in format HH:mm-HH:mm'
+        if (temp.email && !isEmail(temp.email)) {
+            errors.email = 'Wrong format Email'
         }
+
+        temp.emails.map((v, i) => {
+            if (v && !isTime(v)) {
+                return null
+            }
+        })
         this.setState({errors})
         for (var e in errors) {
-            NotificationManager.warning(errors[e], 'Warning', 3000);
+            NotificationManager.warning(errors[e], 'Warning', 4000);
         }
         if (Object.keys(errors).length > 0) {
             return
         }
-        onSubmit(data)
+        if (!this.props.data) {
+            delete temp._id
+        }
+        onSubmit(temp)
     }
 
     render() {
-        const {onClose, heading, organizations, customerGroup, city} = this.props
+        const {onClose, heading, organizations, customerGroup, city, classes} = this.props
         const {open, data, moreConfig, errors} = this.state
         const customerGroupOptions = customerGroup.map(e => ({
             value: e._id,
@@ -180,21 +269,17 @@ class CustomerModal extends Component {
                                 style={{marginTop: '15px'}}
                                 options={organizations}
                                 placeholder='Organization'
-                                value={data.organizationId ? data.organizationId._id : ''}
+                                value={data.organizationId || ''}
                                 error={!!errors.organizationId}
                                 onChange={(e) => {
                                     this.setState({
-                                        ...this.state,
                                         errors: {
                                             ...this.state.errors,
                                             organizationId: ''
                                         },
                                         data: {
-                                            ...this.state.data,
-                                            organizationId: {
-                                                ...this.state.data.organizationId,
-                                                _id: e
-                                            }
+                                            ...data,
+                                            organizationId: e
                                         }
                                     }, () => {
                                         this.fetchGroup()
@@ -208,17 +293,16 @@ class CustomerModal extends Component {
                                 style={{marginTop: '15px'}}
                                 label='Partner Code'
                                 placeholder='Partner Code'
-                                value={data.customerCode}
+                                value={data.customerCode || ''}
                                 error={!!errors.customerCode}
                                 onChange={(e) => {
                                     this.setState({
-                                        ...this.state,
                                         errors: {
                                             ...this.state.errors,
                                             customerCode: ''
                                         },
                                         data: {
-                                            ...this.state.data,
+                                            ...data,
                                             customerCode: e.target.value
                                         }
                                     })
@@ -233,9 +317,8 @@ class CustomerModal extends Component {
                                 value={data.title || ''}
                                 onChange={(e) => {
                                     this.setState({
-                                        ...this.state,
                                         data: {
-                                            ...this.state.data,
+                                            ...data,
                                             title: e.target.value
                                         }
                                     })
@@ -251,9 +334,8 @@ class CustomerModal extends Component {
                                 error={!!errors.fullName}
                                 onChange={(e) => {
                                     this.setState({
-                                        ...this.state,
                                         data: {
-                                            ...this.state.data,
+                                            ...data,
                                             fullName: e.target.value
                                         }
                                     })
@@ -266,13 +348,13 @@ class CustomerModal extends Component {
                                 style={{marginTop: '15px'}}
                                 options={listCity}
                                 placeholder='City'
-                                value={(data.cityId ? data.cityId._id : '')}
+                                value={data.cityId || ''}
+                                error={!!errors.cityId}
                                 onChange={(e) => {
                                     this.setState({
-                                        ...this.state,
                                         data: {
-                                            ...this.state.data,
-                                            city: e
+                                            ...data,
+                                            cityId: e
                                         }
                                     })
                                 }}
@@ -286,9 +368,8 @@ class CustomerModal extends Component {
                                 value={data.district || ''}
                                 onChange={(e) => {
                                     this.setState({
-                                        ...this.state,
                                         data: {
-                                            ...this.state.data,
+                                            ...data,
                                             district: e.target.value
                                         }
                                     })
@@ -307,32 +388,71 @@ class CustomerModal extends Component {
                                 value={data.groupIds ? data.groupIds.map(value => value._id) : []}
                                 onChange={(e) => {
                                     this.setState({
-                                        ...this.state,
                                         data: {
-                                            ...this.state.data,
+                                            ...data,
                                             groupids: e
                                         }
                                     })
                                 }}
                             />
                         </FormControl>
-                        <FormControl>
-                            <TextField
+                        <FormControl style={{marginTop: '16px'}}>
+                            <InputLabel htmlFor="adornment-amount">Email</InputLabel>
+                            <Input
                                 placeholder='Email'
                                 label='Email'
-                                style={{marginTop: '15px'}}
                                 value={data.email || ''}
+                                error={!!errors.email}
                                 onChange={(e) => {
                                     this.setState({
-                                        ...this.state,
                                         data: {
-                                            ...this.state.data,
+                                            ...data,
                                             email: e.target.value
                                         }
                                     })
                                 }}
+                                endAdornment={
+                                    <InputAdornment position="end">
+                                        <AddIcon onClick={() => {
+                                            var temp = data.emails
+                                            temp.push("")
+                                            this.setState({
+                                                data: {
+                                                    ...data,
+                                                    emails: temp
+                                                }
+                                            })
+                                        }}/>
+                                    </InputAdornment>
+                                }
                             />
                         </FormControl>
+                        {data.emails.map((value, index) =>
+                            <FormControl key={index}>
+                                <TextField
+                                    style={{marginTop: '15px'}}
+                                    placeholder='Email'
+                                    label='Email'
+                                    value={value || ''}
+                                    error={!!errors.emails[index]}
+                                    onChange={(e) => {
+                                        this.setState({
+                                            data: {
+                                                ...data,
+                                                emails: this.state.data.emails.map((v, i) => {
+                                                    if (i == index) {
+                                                        return e.target.value
+                                                    } else {
+                                                        return v
+                                                    }
+                                                })
+                                            }
+                                        })
+                                    }}
+                                />
+                            </FormControl>
+                        )
+                        }
                         <FormControl>
                             <TextField
                                 style={{marginTop: '15px'}}
@@ -342,9 +462,8 @@ class CustomerModal extends Component {
                                 error={!!errors.mobileNumber}
                                 onChange={(e) => {
                                     this.setState({
-                                        ...this.state,
                                         data: {
-                                            ...this.state.data,
+                                            ...data,
                                             mobileNumber: e.target.value
                                         }
                                     })
@@ -359,9 +478,8 @@ class CustomerModal extends Component {
                                 value={data.homeNumber || ''}
                                 onChange={(e) => {
                                     this.setState({
-                                        ...this.state,
                                         data: {
-                                            ...this.state.data,
+                                            ...data,
                                             homeNumber: e.target.value
                                         }
                                     })
@@ -383,9 +501,8 @@ class CustomerModal extends Component {
                                 value={data.streetAddress || ''}
                                 onChange={(e) => {
                                     this.setState({
-                                        ...this.state,
                                         data: {
-                                            ...this.state.data,
+                                            ...data,
                                             streetAddress: e.target.value
                                         }
                                     })
@@ -404,9 +521,9 @@ class CustomerModal extends Component {
                                 value={data.salesFrequency || ''}
                                 onChange={(e) => {
                                     this.setState({
-                                        ...this.state,
+
                                         data: {
-                                            ...this.state.data,
+                                            ...data,
                                             salesFrequency: e
                                         }
                                     })
@@ -421,12 +538,12 @@ class CustomerModal extends Component {
                                 style={{marginTop: '15px'}}
                                 label='Comment'
                                 placeholder='Comment'
-                                value={data.comment}
+                                value={data.comment || ''}
                                 onChange={(e) => {
                                     this.setState({
-                                        ...this.state,
+
                                         data: {
-                                            ...this.state.data,
+                                            ...data,
                                             comment: e.target.value
                                         }
                                     })
@@ -441,7 +558,7 @@ class CustomerModal extends Component {
                             className='font-bold'
                             onClick={() =>
                                 this.setState({
-                                    ...this.state,
+
                                     moreConfig: !this.state.moreConfig
                                 })
                             }
@@ -465,14 +582,14 @@ class CustomerModal extends Component {
                                                 label='Latitude'
                                                 placeholder='Latitude'
                                                 type={"number"}
-                                                value={data.coordinate ? data.coordinate.latitude : ' '}
+                                                value={data.coordinate.latitude || ''}
                                                 onChange={e =>
                                                     this.setState({
-                                                        ...this.state,
+
                                                         data: {
-                                                            ...this.state.data,
+                                                            ...data,
                                                             coordinate: {
-                                                                ...this.state.data.coordinate,
+                                                                ...data.coordinate,
                                                                 latitude: e.target.value
                                                             }
                                                         }
@@ -489,9 +606,9 @@ class CustomerModal extends Component {
                                                 error={!!errors.openTime}
                                                 onChange={e =>
                                                     this.setState({
-                                                        ...this.state,
+
                                                         data: {
-                                                            ...this.state.data,
+                                                            ...data,
                                                             openTime: e.target.value
                                                         }
                                                     })
@@ -499,24 +616,42 @@ class CustomerModal extends Component {
 
                                             />
                                         </FormControl>
+                                        <FormControl>
+                                            <TextField
+                                                className='m-t-md'
+                                                label='Sales code'
+                                                placeholder='Sales code'
+                                                value={data.salesCode || ''}
+                                                error={!!errors.salesCode}
+                                                onChange={e =>
+                                                    this.setState({
 
+                                                        data: {
+                                                            ...data,
+                                                            salesCode: e.target.value
+                                                        }
+                                                    })
+                                                }
+
+                                            />
+                                        </FormControl>
                                         <FormControl>
                                             <Select
                                                 className='m-t-md'
                                                 label='Truck Only'
                                                 placeholder='Truck Only'
-                                                value={data.algoConfig ? data.algoConfig.bikeOnly : ' '}
+                                                value={data.algoConfig.bikeOnly || ' '}
                                                 options={[{value: 'FALSE', label: 'FALSE'}, {
                                                     value: 'TRUE',
                                                     label: 'TRUE'
                                                 }]}
                                                 onChange={(e) => {
                                                     this.setState({
-                                                        ...this.state,
+
                                                         data: {
-                                                            ...this.state.data,
+                                                            ...data,
                                                             algoConfig: {
-                                                                ...this.state.data.algoConfig,
+                                                                ...data.algoConfig,
                                                                 truckOnly: e
                                                             }
                                                         }
@@ -533,14 +668,14 @@ class CustomerModal extends Component {
                                                 label='Longitude'
                                                 placeholder='Longitude'
                                                 type={"number"}
-                                                value={data.coordinate ? data.coordinate.longitude : ''}
+                                                value={data.coordinate.longitude || ''}
                                                 onChange={e =>
                                                     this.setState({
-                                                        ...this.state,
+
                                                         data: {
-                                                            ...this.state.data,
+                                                            ...data,
                                                             coordinate: {
-                                                                ...this.state.data.coordinate,
+                                                                ...data.coordinate,
                                                                 longitude: e.target.value
                                                             }
                                                         }
@@ -555,32 +690,50 @@ class CustomerModal extends Component {
                                                 label='Close Time'
                                                 placeholder='Close Time'
                                                 value={data.closeTime || ''}
-                                                error={errors.closeTime}
+                                                error={!!errors.closeTime}
                                                 onChange={e =>
                                                     this.setState({
-                                                        ...this.state,
+
                                                         data: {
-                                                            ...this.state.data,
+                                                            ...data,
                                                             closeTime: e.target.value
                                                         }
                                                     })
                                                 }
                                             />
                                         </FormControl>
+                                        <FormControl>
+                                            <TextField
+                                                className='m-t-md'
+                                                label='MDP'
+                                                placeholder='MDP'
+                                                value={data.MDP || ''}
+                                                error={!!errors.MDP}
+                                                onChange={e =>
+                                                    this.setState({
 
+                                                        data: {
+                                                            ...data,
+                                                            MDP: e.target.value
+                                                        }
+                                                    })
+                                                }
+
+                                            />
+                                        </FormControl>
                                         <FormControl>
                                             <Select
                                                 className='m-t-md'
                                                 label='Sales Code'
                                                 placeholder='Sales Code'
                                                 value={data.algoConfig.bikeOnly || ''}
-                                                options={[{value: 'FALSE', label: 'FALSE'}, {
-                                                    value: 'TRUE',
-                                                    label: 'TRUE'
-                                                }]}
+                                                options={[
+                                                    {value: 'FALSE', label: 'FALSE'},
+                                                    {value: 'TRUE', label: 'TRUE'}
+                                                    ]}
                                                 onChange={e =>
                                                     this.setState({
-                                                        ...this.state,
+
                                                         algoConfig: {
                                                             bikeOnly: e
                                                         }
@@ -594,19 +747,18 @@ class CustomerModal extends Component {
                                         <div className='row'>
                                             <div className='col-md-4'>
                                                 <TextField
-                                                    required
                                                     style={{marginTop: '15px'}}
                                                     label='Thời gian tối thiểu'
                                                     placeholder='Thời gian tối thiểu'
                                                     value={data.algoConfig.minTime || ''}
                                                     onChange={e =>
                                                         this.setState({
-                                                            ...this.state,
+
                                                             data: {
-                                                                ...this.state.data,
+                                                                ...data,
                                                                 algoConfig: {
-                                                                    ...this.state.data.algoConfig,
-                                                                    minTime: e
+                                                                    ...data.algoConfig,
+                                                                    minTime: e.target.value
                                                                 }
                                                             }
                                                         })
@@ -622,12 +774,12 @@ class CustomerModal extends Component {
                                                     value={data.algoConfig.maxTime || ''}
                                                     onChange={e =>
                                                         this.setState({
-                                                            ...this.state,
+
                                                             data: {
-                                                                ...this.state.data,
+                                                                ...data,
                                                                 algoConfig: {
-                                                                    ...this.state.data.algoConfig,
-                                                                    maxTime: e
+                                                                    ...data.algoConfig,
+                                                                    maxTime: e.target.value
                                                                 }
                                                             }
                                                         })
@@ -640,15 +792,16 @@ class CustomerModal extends Component {
                                                     style={{marginTop: '15px'}}
                                                     label='Khung thời gian'
                                                     placeholder='Khung thời gian'
+                                                    error={!!errors.timewindow}
                                                     value={data.algoConfig.timewindow || ''}
                                                     onChange={e =>
                                                         this.setState({
-                                                            ...this.state,
+
                                                             data: {
-                                                                ...this.state.data,
+                                                                ...data,
                                                                 algoConfig: {
-                                                                    ...this.state.data.algoConfig,
-                                                                    timewindow: e
+                                                                    ...data.algoConfig,
+                                                                    timewindow: e.target.value
                                                                 }
                                                             }
                                                         })
@@ -656,20 +809,19 @@ class CustomerModal extends Component {
                                                 />
                                             </div>
                                         </div>
-                                        <FormGroup row className='m-t-md'>
+                                        <div className="row">
                                             <div className='col-md-6'>
                                                 <TextField
-                                                    required
                                                     style={{marginTop: '15px'}}
                                                     label='Tax Code'
                                                     placeholder='Tax Code'
                                                     value={data.taxCode || ''}
                                                     onChange={e =>
                                                         this.setState({
-                                                            ...this.state,
+
                                                             data: {
-                                                                ...this.state.data,
-                                                                taxCode: e
+                                                                ...data,
+                                                                taxCode: e.target.value
                                                             }
 
                                                         })
@@ -685,17 +837,17 @@ class CustomerModal extends Component {
                                                     value={data.invoiceAddress || ''}
                                                     onChange={e =>
                                                         this.setState({
-                                                            ...this.state,
+
                                                             data: {
-                                                                ...this.state.data,
-                                                                invoiceAddress: e
+                                                                ...data,
+                                                                invoiceAddress: e.target.value
                                                             }
 
                                                         })
                                                     }
                                                 />
                                             </div>
-                                        </FormGroup>
+                                        </div>
                                         <FormGroup row className='m-t-md'>
                                             <FormLabel component='legend'>Working Days</FormLabel>
                                             {workingDayList.map((day, index) => (
@@ -707,9 +859,9 @@ class CustomerModal extends Component {
                                                             color='primary'
                                                             value={day.value}
                                                             checked={
-                                                                data.algoConfig.workingDays.indexOf(
+                                                                this.props.data ? (data.algoConfig.workingDays.indexOf(
                                                                     day.value
-                                                                ) !== -1
+                                                                ) !== -1) : null
                                                             }
                                                             onChange={e =>
                                                                 this.setWorkingDays(e, day.value)
@@ -733,11 +885,11 @@ class CustomerModal extends Component {
 export default connect(
     ({
          partner: {
-             customerGroup: {list_single},
+             customerGroup,
              city: {list, error, status}
          },
      }) => ({
-        customerGroup: list_single,
+        customerGroup: customerGroup.list.data_single,
         city: list
     }),
     dispatch => ({

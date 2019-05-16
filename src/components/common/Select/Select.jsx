@@ -11,8 +11,8 @@ import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown'
 import CancelIcon from '@material-ui/icons/Cancel'
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp'
 import ClearIcon from '@material-ui/icons/Clear'
-
 import Chip from '@material-ui/core/Chip'
+import InputLabel from '@material-ui/core/InputLabel'
 import Select from 'react-select'
 
 class Option extends React.Component {
@@ -60,7 +60,6 @@ function SelectWrapped (props) {
         if (onRemove) {
           return (
             <Chip
-                style={{height:23}}
               tabIndex={-1}
               label={children}
               className={classes.chip}
@@ -189,6 +188,12 @@ class IntegrationReactSelect extends React.Component {
       value: props.value || null
     }
   }
+  componentWillReceiveProps(nextProps, nextContext) {
+    if(nextProps.value!=this.props.value)
+    this.setState({
+      value:nextProps.value
+    })
+  }
 
   handleChangeValue = v => {
     const { onChange, isMulti } = this.props
@@ -206,13 +211,12 @@ class IntegrationReactSelect extends React.Component {
       options,
       label,
       placeholder,
-        error,
       ...rest
     } = this.props
     const { value } = this.state
     return (
-      <FormControl {...rest}>
-         {/*<InputLabel htmlFor='select-custom'>{label}</InputLabel>*/}
+      <FormControl>
+         {/*<InputLabel htmlFor='adornment-amount'>{label}</InputLabel>*/}
         <Input
           fullWidth
           inputComponent={SelectWrapped}
@@ -230,7 +234,6 @@ class IntegrationReactSelect extends React.Component {
             options: options,
               // isTrusted:true
           }}
-          error={error}
           onChange={(e)=>{console.log(e)}}
         />
       </FormControl>

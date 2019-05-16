@@ -16,31 +16,31 @@ import FloatingActionButton from '../common/FloatingActionButton/FloatingActionB
 import UploadModal from '../UploadModal'
 import {
     listOrganization,
-    listPartner,
     listCustomerGroup,
-    updatePartner,
-    deletePartner
+    updateCustomerGroup,
+    createCustomerGroup, readCustomerGroup
 } from '../../actions'
 import {getCookie} from "../../util/helpers";
 import OrganizationModal from "../OrganizationPage/OrganizationModal";
-import CustomerModal from "./CustomerModal";
+import CustomerGroupModal from "./CustomerGroupModal";
 import UserModal from "../OrganizationPage/UserModal";
 
-class CustomerList extends Component {
+class CustomerGroup extends Component {
     static propTypes = {
-        listPartnerFunc: PropTypes.func.isRequired,
-        updatePartnerFunc: PropTypes.func.isRequired,
-        deletePartnerFunc: PropTypes.func.isRequired,
-        listOrgFunc: PropTypes.func.isRequired,
-        listCustomerGroupFunc: PropTypes.func.isRequired,
-        status: PropTypes.object.isRequired,
-        // partnerList: PropTypes.object.isRequired,
-        organizations: PropTypes.array.isRequired,
-
+        // listGroupFunc: PropTypes.func.isRequired,
+        // createUserGroupFunc: PropTypes.func.isRequired,
+        // updateUserGroupFunc: PropTypes.func.isRequired,
+        // deleteUserGroupFunc: PropTypes.func.isRequired,
+        // listOrgFunc: PropTypes.func.isRequired,
+        //
+        // status: PropTypes.object.isRequired,
+        // // customerGroupList: PropTypes.object.isRequired,
+        // organizations: PropTypes.array.isRequired
     }
 
     constructor(props) {
         super(props)
+        const user = JSON.parse(getCookie('user'));
         this.state = {
             modal: {
                 create: false,
@@ -51,9 +51,9 @@ class CustomerList extends Component {
             },
             filter: {
                 keyword: '',
-                organization: ''
+                organization: user.organizationIds || ''
             },
-            user: JSON.parse(getCookie('user')),
+            user: user || {},
             pageLimit: 10,
             currentPage: 0,
             checkLoad: true,
@@ -64,17 +64,14 @@ class CustomerList extends Component {
     componentDidMount() {
         const {listOrgFunc, listCustomerGroupFunc} = this.props
         const {currentPage, pageLimit, user} = this.state
-        this.fetchCustomer()
+        this.fetchCustomerGroup()
         listOrgFunc({
-            // currentPage: currentPage,
-            // pageLimit: pageLimit * 100,
-            // orderBy: {organizationName: 1},
-            categoryCodes: ['DEPOT','SUN','XDOCK']
+            categoryCodes: ['DEPOT', 'SUN', 'XDOCK']
         })
         listCustomerGroupFunc({
-            currentPage: 1,
+            currentPage: currentPage + 1,
             organizationIds: user.organizationIds,
-            pageLimit: 1000
+            pageLimit: pageLimit
         }, 'all')
 
     }
@@ -84,14 +81,14 @@ class CustomerList extends Component {
         const {status, user} = nextProps
         if ((checkLoad == true) && status[st] == STATUS_SUCCESS) {
             this.setState({checkLoad: false}, () => {
-                this.fetchCustomer()
+
+                this.fetchCustomerGroup()
             })
         }
     }
 
-    fetchCustomer = () => {
-        console.log('Load')
-        const {listPartnerFunc} = this.props
+    fetchCustomerGroup = () => {
+        const {listCustomerGroupFunc} = this.props
         const {filter, currentPage, pageLimit, user} = this.state
         const options = {}
 
@@ -100,6 +97,8 @@ class CustomerList extends Component {
         }
         if (filter.organization) {
             options.organizationIds = [filter.organization]
+        } else {
+            options.organizationIds = user.organizationIds
         }
         if (filter.customerGroup) {
             if (Object.keys(filter.customerGroup).length > 0 && filter.customerGroup[0] != "") {
@@ -109,64 +108,69 @@ class CustomerList extends Component {
         if (pageLimit > 1) {
             options.pageLimit = pageLimit
         }
-        listPartnerFunc({
+        listCustomerGroupFunc({
             currentPage: currentPage + 1,
             pageLimit: pageLimit,
             orderBy: {createdAt: 1},
-            organizationIds: user.organizationIds,
             ...options
-        })
+        }, 'all')
     }
 
-    onEditPartner = (value = {}) => {
-        console.log(value)
+    onEditGroup = (value = {}) => {
+        const {readCustomerGroupFunc, listCustomerGroupFunc} = this.props
+        readCustomerGroupFunc({_id: value._id})
+        listCustomerGroupFunc({
+            currentPage: 1,
+            organizationIds: [value.organizationId._id],
+            pageLimit: 1000
+        }, 'single')
         this.setState({
             modal: {
                 update: true,
-                data: {...value}
+                data: value
             }
         })
     }
 
-    onDeletePartner = (value = ['']) => {
-        const {deletePartnerFunc} = this.props
+    onDeleteGroup = (value = ['']) => {
+        const {deleteGroupFunc} = this.props
         if (value && window.confirm('Are you sure ? ')) {
-            this.setState({modal: {update: false}, checkLoad: true, st: 'deletePartner'}, () => {
-                deletePartnerFunc({
+            this.setState({modal: {update: false}, checkLoad: true, st: 'deleteGroup'}, () => {
+                deleteGroupFunc({
                     customerType: 0,
                     ids: [value]
                 })
             })
         }
     }
-    onDeletePartnerArr = arr => {
-        const {deletePartnerFunc} = this.props
+    onDeleteGroupArr = arr => {
+        const {deleteGroupFunc} = this.props
         if (window.confirm('Are you sure ? ')) {
             var deleteArr = arr.data.map((value, index) =>
-                this.props.partnerList[value.index]._id
+                this.props.customerGroupList[value.index]._id
             )
-            this.setState({checkLoad: true, st: 'deletePartner'}, () => {
-                deletePartnerFunc({
+            this.setState({checkLoad: true, st: 'deleteGroup'}, () => {
+                deleteGroupFunc({
                     customerType: 0,
                     ids: deleteArr
                 })
             });
         }
     }
-    getActions = valueoup => (
+    getActions = value => (
         <React.Fragment>
             <Tooltip title='Edit'>
                 <IconButton
                     size='small'
                     style={{maxWidth: '30px', height: '30px'}}
-                    onClick={() => this.onEditPartner(valueoup)}
+                    onClick={() => this.onEditGroup(value)}
                 >
                     <UpdateIcon/>
                 </IconButton>
             </Tooltip>
             <Tooltip title='delete'>
                 <IconButton
-                    onClick={() => this.onDeletePartner([valueoup._id])}
+                    onClick={() => this.onDeleteGroup([value._id])}
                     size='small'
                     style={{maxWidth: '30px', height: '30px'}}
                 >
@@ -177,47 +181,37 @@ class CustomerList extends Component {
     )
 
     render() {
-        const {modal, query, filter, currentPage, pageLimit} = this.state
-        const {partnerList, status, location, organizations, totalLength, customerGroup, updatePartnerFunc} = this.props
+        const {modal, query, filter, currentPage, pageLimit,user} = this.state
+        const {customerGroupList, listCustomerGroupFunc, status, location, organizations, totalLength, updateCustomerGroupFunc, createCustomerGroupFunc} = this.props
         const orgOptions = organizations.map(org => ({
             value: org._id,
             label: org.organizationName
         }))
-        const customerGroupOptions = customerGroup.map(org => ({
-            value: org._id,
-            label: org.groupName
-        })).reverse()
         const columns = [
-            {name: 'Customer Code', options: {filter: true, styles: {maxWidth: '10'}}},
-            {name: 'Customer Name', options: {filter: true}},
-            {name: 'Email', options: {filter: false, sort: false}},
-            {name: 'Mobile Mumber', options: {filter: false, sort: false}},
-            {name: 'Customer Group', options: {filter: false, sort: false}},
-            {name: 'Province'},
-            {name: 'Address', options: {filter: false, sort: false}},
+            {name: 'Group Code', options: {filter: true, styles: {maxWidth: '10'}}},
+            {name: 'Group Parent', options: {filter: true}},
+            {name: 'Group Name', options: {filter: false, sort: false}},
+            {name: 'Group description', options: {filter: false, sort: false}},
             {name: 'Option', options: {filter: false, sort: false}}
         ]
         let dataTable = []
-        if (partnerList.length > 0) {
-            dataTable = partnerList.map(value => [
-                value.customerCode,
-                value.fullName,
-                value.email,
-                value.mobileNumber,
-                (value.groupIds[0] ? value.groupIds[0].groupName : ''),
-                (value.cityId ? value.cityId.cityName : ''),
-                value.streetAddress,
+        if (customerGroupList.length > 0) {
+            dataTable = customerGroupList.map(value => [
+                value.groupCode,
+                (value.parentId ? value.parentId.groupName : ''),
+                value.groupName,
+                value.groupDes,
                 this.getActions(value)
             ])
         }
         return (
             <div className='user-group-list'>
                 <div className='filter-search m-t-xs m-b-md'>
-                    <form onSubmit={() => this.fetchCustomer()}>
+                    <form onSubmit={() => this.fetchCustomerGroup()}>
                         <div className='row'>
                             <div className='col-md-2 col-sm-4 earch'>
                                 <TextField
-                                    placeholder='Search User Group'
+                                    placeholder='Search customer Group'
                                     className='w-100'
                                     style={{marginTop: '4px'}}
                                     value={filter.keyword || ''}
@@ -228,7 +222,7 @@ class CustomerList extends Component {
                                                 ...filter,
                                                 keyword: e.target.value
                                             }
-                                        }, this.fetchCustomer)
+                                        }, this.fetchCustomerGroup)
                                     }
                                 />
                             </div>
@@ -236,7 +230,7 @@ class CustomerList extends Component {
                                 <Select
                                     placeholder='Organizations'
                                     value={filter.organization || ''}
-                                    options={orgOptions}
+                                    options={orgOptions || ''}
                                     onChange={value =>
                                         this.setState(
                                             ...this.state,
@@ -246,27 +240,7 @@ class CustomerList extends Component {
                                                     organization: value
                                                 }
                                             },
-                                            this.fetchCustomer
-                                        )
-                                    }
-                                />
-                            </div>
-                            <div className='col-md-2 col-sm-4 filter-organization'>
-                                <Select
-                                    isMulti={true}
-                                    placeholder='Customer group'
-                                    value={filter.customerGroup || ''}
-                                    options={customerGroupOptions}
-                                    onChange={value =>
-                                        this.setState(
-                                            ...this.state,
-                                            {
-                                                filter: {
-                                                    ...filter,
-                                                    customerGroup: value
-                                                }
-                                            },
-                                            this.fetchCustomer
+                                            this.fetchCustomerGroup
                                         )
                                     }
                                 />
@@ -280,12 +254,22 @@ class CustomerList extends Component {
                         <FloatingActionButton.FloatingMenuItem
                             icon='edit'
                             label='Create'
-                            onClick={() => this.setState({modal: {create: true}})}
+                            onClick={() => {
+                                listCustomerGroupFunc({
+                                    currentPage: 1,
+                                    organizationIds: [],
+                                    pageLimit: 1000
+                                }, 'single')
+                                this.setState({modal: {create: true}})
+                            }}
                         />
                         <FloatingActionButton.FloatingMenuItem
                             icon='upload'
                             label='Import'
-                            onClick={() => this.setState({modal: {upload: true}})}
+                            onClick={() => {
+                                this.setState({modal: {upload: true}})
+                            }
+                            }
                         />
                     </FloatingActionButton>
                 </div>
@@ -296,46 +280,44 @@ class CustomerList extends Component {
                     rowsPerPage={pageLimit}
                     columns={columns}
                     data={dataTable}
-                    loading={status.list === STATUS_LOADING}
+                    // loading={status.list === STATUS_LOADING}
                     onChangeRowsPerPage={number =>
                         this.setState({pageLimit: number}, () => {
-                            this.fetchCustomer()
+                            this.fetchCustomerGroup()
                         })
                     }
                     onChangePage={
                         number => {
                             this.setState({currentPage: number}, () => {
-                                this.fetchCustomer()
+                                this.fetchCustomerGroup()
                             })
                         }
                     }
-                    onRowsDelete={arr => this.onDeletePartnerArr(arr)}
+                    onRowsDelete={arr => this.onDeleteGroupArr(arr)}
                 />
                 {modal.create && (
-                    <CustomerModal
+                    <CustomerGroupModal
                         heading='Create Organization'
                         open={modal.create}
-                        organizations={orgOptions}
-                        // parentOrgs={prOrgs}
+                        create={true}
                         okText='Create'
                         onClose={() => this.setState({modal: {create: false}})}
                         onSubmit={data =>
-                            this.setState({modal: {update: false}, checkLoad: true, st: 'update'}, () => {
-                                updatePartnerFunc(data)
+                            this.setState({modal: {update: false}, checkLoad: true, st: 'create'}, () => {
+                                createCustomerGroupFunc(data)
                             })
                         }
                     />
                 )}{modal.update && (
-                <CustomerModal
+                <CustomerGroupModal
                     heading='Update Organization'
                     open={modal.update}
-                    organizations={orgOptions}
-                    data={modal.data}
+                    create={false}
                     okText='Update'
                     onClose={() => this.setState({modal: {update: false}})}
                     onSubmit={data => {
                         this.setState({modal: {update: false}, checkLoad: true, st: 'update'}, () => {
-                            updatePartnerFunc(data)
+                            updateCustomerGroupFunc(data)
                         })
                     }
                     }
@@ -356,35 +338,32 @@ class CustomerList extends Component {
 export default connect(
     ({
          partner: {
-             partners: {list, models, create, update, deletePartner, totalLength},
-             customerGroup,
+             customerGroup: {list, create, update, deleteCustomerGroup, totalLength},
          },
          organization: {
              organizations
          },
-
          auth: {
              user
          }
      }) => ({
-        partnerList: list.data || [],
+        customerGroupList: list.data || [],
         organizations:
             organizations.list.ids.map(orgId => organizations.models[orgId]) || [],
         status: {
             list: list.status || '',
             create: create.status || '',
             update: update.status || '',
-            deletePartner: deletePartner.status || ''
+            deleteCustomerGroup: deleteCustomerGroup.status || ''
         },
         user,
-        customerGroup: customerGroup.list.data,
         totalLength
     }),
     dispatch => ({
-        listPartnerFunc: params => dispatch(listPartner(params)),
-        updatePartnerFunc: params => dispatch(updatePartner(params)),
-        deletePartnerFunc: params => dispatch(deletePartner(params)),
         listOrgFunc: params => dispatch(listOrganization(params)),
-        listCustomerGroupFunc: (params, option) => dispatch(listCustomerGroup(params, option))
+        listCustomerGroupFunc: (params, option) => dispatch(listCustomerGroup(params, option)),
+        readCustomerGroupFunc: (params) => dispatch(readCustomerGroup(params)),
+        updateCustomerGroupFunc: (params) => dispatch(updateCustomerGroup(params)),
+        createCustomerGroupFunc: (params) => dispatch(createCustomerGroup(params))
     })
-)(CustomerList)
+)(CustomerGroup)
