@@ -49,15 +49,6 @@ class CustomerGroupModal extends Component {
 
         }
     }
-
-    componentDidMount() {
-        // const {readCustomerGroupFunc, id} = this.props
-        // this.fetchGroup();
-        // if (id) {
-        //     readCustomerGroupFunc({_id: id})
-        // }
-    }
-
     static getDerivedStateFromProps(nextProps, prevState) {
         if ((nextProps.open !== prevState.open) && nextProps.status == STATUS_SUCCESS && nextProps.create !== true) {
             return {
@@ -99,10 +90,11 @@ class CustomerGroupModal extends Component {
         if (Object.keys(errors).length > 0) {
             return
         }
-        if (!this.props.id) {
+        if (this.props.create) {
             delete temp._id
             delete temp.selfAssociated
         }
+        console.log(temp)
         onSubmit(temp)
     }
 

@@ -16,6 +16,7 @@ import UploadModal from '../UploadModal'
 import DataTable from '../common/DataTable/DataTable'
 import OrganizationModal from './OrganizationModal'
 import FloatingActionButton from '../common/FloatingActionButton/FloatingActionButton'
+import {getCenter,getUnique} from "../../util/helpers";
 import {STATUS_SUCCESS, STATUS_LOADING, KEY_GOOGLE_MAP} from '../../constants/Const'
 import {
     withScriptjs,
@@ -243,23 +244,29 @@ class OrganizationList extends Component {
                 </div>
             ])
         }
-        // console.log(getCenter(organizations))
+        var map = organizations.map((value, i) => {
+            if (value.coordinate != undefined && value.coordinate.latitude != 0 && value.coordinate.longitude != 0 && value.coordinate.latitude != null && value.coordinate.longitude != null) {
+                return {...value.coordinate,streetAddress:value.streetAddress}
+            }
+            else {
+                null
+            }
+        })
+        map = map.filter(v=>v!=null||v!=undefined)
         const MapWithAMarker = withScriptjs(withGoogleMap(props =>
             <GoogleMap
                 defaultZoom={7}
-                defaultCenter={getCenter(organizations)}
+                defaultCenter={getCenter(map)}
             >
-                {organizations.map((value, key) => {
-                    if (value.coordinate.latitude != 0 && value.coordinate.longitude != 0) {
-                        return (
-                            <Marker
-                                key={key}
-                                position={{lat: value.coordinate.latitude, lng: value.coordinate.longitude}}
-                                title={value.streetAddress}
+                {map.map((value, key) => {
+                    return (
+                        <Marker
+                            key={key}
+                            position={{lat: value.latitude, lng: value.longitude}}
+                            title={value.streetAddress}
 
-                            />
-                        )
-                    }
+                        />
+                    )
                 })}
 
             </GoogleMap>
@@ -471,57 +478,3 @@ export default connect(
         uploadFileOrgFunc: file => dispatch(uploadFileOrg(file))
     })
 )(OrganizationList)
-
-function getCenter(arr) {
-    let l = []
-    for (let i = 0; i < arr.length; i++) {
-        var distance = 0;
-        for (let j = 0; j < arr.length; j++) {
-            if (arr[i].coordinate.latitude != 0 && arr[i].coordinate != 0)
-                distance += getDistance(arr[i].coordinate, arr[j].coordinate)
-            else
-                distance += 40000
-        }
-        l.push(distance)
-
-    }
-    var min = Math.min(...l)
-    for (let i = 0; i < l.length; i++) {
-        if (l[i] == min) {
-
-            return {lat: arr[i].coordinate.latitude, lng: arr[i].coordinate.longitude}
-        }
-    }
-    return {lat: 0, lng: 0}
-
-}
-
-function rad(x) {
-    return x * Math.PI / 180;
-};
-
-function getDistance(p1, p2) {
-    var R = 6371; // Earth’s mean radius in meter
-    var dLat = rad(p2.latitude - p1.latitude);
-    var dLong = rad(p2.longitude - p1.longitude);
-    var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-        Math.cos(rad(p1.latitude)) * Math.cos(rad(p2.latitude)) *
-        Math.sin(dLong / 2) * Math.sin(dLong / 2);
-    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    var d = R * c;
-    return d; // returns the distance in meter
-};
-
-function getUnique(arr, comp) {
-
-    const unique = arr
-        .map(e => e[comp])
-
-        // store the keys of the unique objects
-        .map((e, i, final) => final.indexOf(e) === i && i)
-
-        // eliminate the dead keys & store unique objects
-        .filter(e => arr[e]).map(e => arr[e]);
-
-    return unique;
-}

@@ -81,7 +81,6 @@ class CustomerGroup extends Component {
         const {status, user} = nextProps
         if ((checkLoad == true) && status[st] == STATUS_SUCCESS) {
             this.setState({checkLoad: false}, () => {
-
                 this.fetchCustomerGroup()
             })
         }
@@ -338,7 +337,7 @@ class CustomerGroup extends Component {
 export default connect(
     ({
          partner: {
-             customerGroup: {list, create, update, deleteCustomerGroup, totalLength},
+             customerGroup: {list, create, update, deleteCustomerGroup,totalLength},
          },
          organization: {
              organizations

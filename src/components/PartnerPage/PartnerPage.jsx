@@ -4,8 +4,8 @@ import Tab from '@material-ui/core/Tab'
 
 import MainPage from '../Pages'
 import CustomerList from './CustomerList'
-import SuppliersList from './CustomerGroup'
-import PartnerGroupList from './PartnerGroupList'
+import CustomerGroup from './CustomerGroup'
+import SuppliersList from './SuppliersList'
 
 let customer =0
 let customerGroup = 1
@@ -66,8 +66,8 @@ class PartnerPage extends React.Component {
         </MainPage.Header>
         <MainPage.Content>
           {activeTab === customer && <CustomerList />}
-          {activeTab === customerGroup && <SuppliersList />}
-          {activeTab === supplier && <PartnerGroupList />}
+          {activeTab === customerGroup && <CustomerGroup />}
+          {activeTab === supplier && <SuppliersList />}
         </MainPage.Content>
       </div>
     )

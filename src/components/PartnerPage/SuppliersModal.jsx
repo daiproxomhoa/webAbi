@@ -19,9 +19,9 @@ import Checkbox from "@material-ui/core/Checkbox";
 import {isTime, isTimewindow_partner, isPhoneNumber, isEmail} from '../../util/helpers'
 import {NotificationManager} from "react-notifications";
 import AddIcon from '@material-ui/icons/Add';
-import InfoIcon from '@material-ui/icons/Info';
 import Api from '../../util/api'
 import {STATUS_ERROR, STATUS_SUCCESS} from "../../constants/Const";
+import InfoIcon from "@material-ui/core/SvgIcon/SvgIcon";
 
 const INIT_DATA = {
     MDP: '',
@@ -127,12 +127,11 @@ class CustomerModal extends Component {
                     data: {
                         ...dt.data,
                         groupIds: dt.data.groupIds.filter(function (el) {
-                            return el != null &&  el !=undefined;
+                            return el != null && el != undefined;
                         })
                     }, status: STATUS_SUCCESS, customerGroup: customerGroup
-                })}
-
-             catch (e) {
+                })
+            } catch (e) {
                 this.setState({data: {...INIT_DATA}, status: STATUS_ERROR, customerGroup: customerGroup})
             }
         } else {
@@ -241,6 +240,7 @@ class CustomerModal extends Component {
         }
         if (!this.props.data) {
             delete temp._id
+            temp.species = "SUPPLIERS"
         }
         onSubmit(temp)
     }
@@ -302,10 +302,9 @@ class CustomerModal extends Component {
             {value: 'SUN', label: 'Sunday'}
         ]
         const workingDayList = [...firstWeekDayOptions]
-        // console.log(data.serial)
         return (
             <Modal
-                className='Partner_Modal'
+                className='Supplier_Modal'
                 open={open}
                 size='lg'
                 onClose={onClose}
@@ -342,8 +341,8 @@ class CustomerModal extends Component {
                         <FormControl>
                             <TextField
                                 style={{marginTop: '15px'}}
-                                label='Partner Code'
-                                placeholder='Partner Code'
+                                label='Supplier Code'
+                                placeholder='Supplier Code'
                                 value={data.customerCode || ''}
                                 error={!!errors.customerCode}
                                 onChange={(e) => {
@@ -432,8 +431,8 @@ class CustomerModal extends Component {
                         <FormControl>
                             <Select
                                 isMulti={true}
-                                label='Partner Group'
-                                placeholder='Partner Group'
+                                label='Supplier Group'
+                                placeholder='Supplier Group'
                                 style={{marginTop: '15px'}}
                                 options={customerGroupOptions}
                                 value={data.groupIds ? data.groupIds : []}
@@ -703,7 +702,7 @@ class CustomerModal extends Component {
                                                 className='m-t-md'
                                                 label='Truck Only'
                                                 placeholder='Truck Only'
-                                                value={data.algoConfig. truckOnly || ' '}
+                                                value={data.algoConfig.truckOnly || ' '}
                                                 options={[{value: 'FALSE', label: 'FALSE'}, {
                                                     value: 'TRUE',
                                                     label: 'TRUE'
@@ -792,9 +791,9 @@ class CustomerModal extends Component {
                                                 value={data.salesCode || ''}
                                                 onChange={e =>
                                                     this.setState({
-                                                        data:{
+                                                        data: {
                                                             ...data,
-                                                            salesCode:e.target.value
+                                                            salesCode: e.target.value
                                                         }
                                                     })
                                                 }

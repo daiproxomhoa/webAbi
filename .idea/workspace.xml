@@ -1,0 +1,1135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="cac18951-03b7-4be2-8641-b2859f5f6b5b" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/components/common/TextField/TextField.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/common/TextField/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/scss/_app-variables.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/scss/_app-variables.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/OrganizationPage/OrganizationList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/OrganizationPage/OrganizationList.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/PartnerPage/CustomerGroup.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/PartnerPage/CustomerGroup.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/PartnerPage/CustomerGroupModal.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/PartnerPage/CustomerGroupModal.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/PartnerPage/CustomerList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/PartnerPage/CustomerList.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/PartnerPage/CustomerModal.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/PartnerPage/CustomerModal.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/PartnerPage/PartnerGroupList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/PartnerPage/SuppliersList.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/PartnerPage/PartnerGroupModal.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/PartnerPage/SuppliersModal.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/PartnerPage/PartnerPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/PartnerPage/PartnerPage.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/common/Select/Select.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/Select/Select.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/reducers/partner.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/reducers/partner.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sagas/partner.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/sagas/partner.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/util/helpers.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/helpers.js" afterDir="false" />
+    </list>
+    <ignored path="$PROJECT_DIR$/.tmp/" />
+    <ignored path="$PROJECT_DIR$/temp/" />
+    <ignored path="$PROJECT_DIR$/tmp/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/PartnerPage/CustomerModal.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-6692">
+              <caret line="548" column="67" selection-start-line="548" selection-start-column="67" selection-end-line="548" selection-end-column="67" />
+              <folding>
+                <element signature="e#0#38#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/node_modules/@material-ui/core/InputAdornment/InputAdornment.d.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="187">
+              <caret line="12" column="14" selection-start-line="12" selection-start-column="14" selection-end-line="12" selection-end-column="14" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/common/TextField/TextField.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="268">
+              <caret line="45" column="25" lean-forward="true" selection-start-line="45" selection-start-column="25" selection-end-line="45" selection-end-column="25" />
+              <folding>
+                <element signature="e#0#56#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/PartnerPage/SuppliersModal.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="7668">
+              <caret line="555" column="30" selection-start-line="555" selection-start-column="30" selection-end-line="555" selection-end-column="30" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/components/PartnerPage/CustomerList.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="284">
+              <caret line="118" column="22" selection-start-line="118" selection-start-column="22" selection-end-line="118" selection-end-column="22" />
+              <folding>
+                <element signature="e#0#38#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/PartnerPage/PartnerPage.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="166">
+              <caret line="68" column="56" selection-start-line="68" selection-start-column="56" selection-end-line="68" selection-end-column="56" />
+              <folding>
+                <element signature="e#0#25#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/PartnerPage/SuppliersList.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="561">
+              <caret line="397" column="36" lean-forward="true" selection-start-line="397" selection-start-column="36" selection-end-line="397" selection-end-column="36" />
+              <folding>
+                <element signature="e#0#38#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/reducers/partner.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="383">
+              <caret line="123" column="43" selection-start-line="123" selection-start-column="43" selection-end-line="123" selection-end-column="43" />
+              <folding>
+                <element signature="e#1171#1279#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/OrganizationPage/OrganizationList.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="326">
+              <caret line="271" column="24" selection-start-line="271" selection-start-column="24" selection-end-line="271" selection-end-column="24" />
+              <folding>
+                <element signature="e#0#38#0" expanded="true" />
+                <element signature="e#3115#3740#0" />
+                <element signature="e#3765#4153#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/sagas/partner.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="131">
+              <caret line="37" column="62" selection-start-line="37" selection-start-column="48" selection-end-line="37" selection-end-column="62" />
+              <folding>
+                <element signature="e#0#67#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="CSS File" />
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>onChangeText</find>
+      <find>Group</find>
+      <find>listOrgFunc</find>
+      <find>Select</find>
+      <find>groupIds</find>
+      <find>consol</find>
+      <find>totalLength:</find>
+      <find>listCustomerGroupFunc</find>
+      <find>id</find>
+      <find>totalLength</find>
+      <find>columns</find>
+      <find>selectRowDelete</find>
+      <find>this.props.columns</find>
+      <find>isMap</find>
+      <find>googleMapURL</find>
+      <find>.coordinate</find>
+      <find>MapWithAMarker</find>
+      <find>getUno</find>
+      <find>customers/list</find>
+      <find>listPartnerFunc</find>
+      <find>Customer</find>
+      <find>'Partner</find>
+      <find>Tr</find>
+      <find>Sales Cod</find>
+      <find>Sa</find>
+      <find>Input</find>
+      <find>endAdornment</find>
+      <find>AddIcon</find>
+      <find>listPartnerFunc</find>
+      <find>Ser</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>fetchUser</replace>
+      <replace>users</replace>
+      <replace>user</replace>
+      <replace>&lt;UserModal</replace>
+      <replace>fetchCustomer</replace>
+      <replace>listPartnerFunc</replace>
+      <replace>Route</replace>
+      <replace>partnerList</replace>
+      <replace>prt</replace>
+      <replace>onDeletePartner</replace>
+      <replace>maxWidth</replace>
+      <replace>e</replace>
+      <replace>data</replace>
+      <replace>&quot;&quot;</replace>
+      <replace>SupplierList</replace>
+      <replace>customerGroupList</replace>
+      <replace>supplier</replace>
+      <replace>Group</replace>
+      <replace>fetchCustomerGroup</replace>
+      <replace>CustomerGroupModal</replace>
+      <replace>updateCustomerGroupFunc</replace>
+      <replace>value</replace>
+      <replace>CREATE</replace>
+      <replace>READ</replace>
+      <replace>partners</replace>
+      <replace>Input</replace>
+      <replace>partnerId</replace>
+      <replace>label</replace>
+      <replace>Supplier</replace>
+      <replace>'Supplier</replace>
+    </replaceStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/src/components/common/Select/SelectTest.js" />
+        <option value="$PROJECT_DIR$/src/components/OrganizationPage/OrganizationPage.jsx" />
+        <option value="$PROJECT_DIR$/src/components/OrganizationPage/UserGroupList.jsx" />
+        <option value="$PROJECT_DIR$/src/components/OrganizationPage/UserList.jsx" />
+        <option value="$PROJECT_DIR$/src/actions/orgActions.js" />
+        <option value="$PROJECT_DIR$/src/sagas/organization.js" />
+        <option value="$PROJECT_DIR$/package.json" />
+        <option value="$PROJECT_DIR$/src/constants/AppConfig.js" />
+        <option value="$PROJECT_DIR$/src/constants/Const.js" />
+        <option value="$PROJECT_DIR$/src/components/PartnerPage/CustomerList.js" />
+        <option value="$PROJECT_DIR$/src/sagas/index.js" />
+        <option value="$PROJECT_DIR$/src/actions/index.js" />
+        <option value="$PROJECT_DIR$/src/components/AuthorizedRoute.jsx" />
+        <option value="$PROJECT_DIR$/src/components/common/Header/Header.js" />
+        <option value="$PROJECT_DIR$/src/reducers/index.js" />
+        <option value="$PROJECT_DIR$/src/components/common/MuiTB/MUIDataTable.js" />
+        <option value="$PROJECT_DIR$/src/components/common/MuiTB/components/TableHead.js" />
+        <option value="$PROJECT_DIR$/src/components/common/MuiTB/components/TableHeadCell.js" />
+        <option value="$PROJECT_DIR$/src/components/OrganizationPage/UserGroupModal.jsx" />
+        <option value="$PROJECT_DIR$/src/components/OrganizationPage/UserModal.jsx" />
+        <option value="$PROJECT_DIR$/src/components/PartnerPage/PartnerModal.jsx" />
+        <option value="$PROJECT_DIR$/src/App.jsx" />
+        <option value="$PROJECT_DIR$/src/components/Pages.jsx" />
+        <option value="$PROJECT_DIR$/src/sagas/noti.js" />
+        <option value="$PROJECT_DIR$/src/layout/App.jsx" />
+        <option value="$PROJECT_DIR$/src/reducers/organization.js" />
+        <option value="$PROJECT_DIR$/src/util/api.js" />
+        <option value="$PROJECT_DIR$/src/configs.js" />
+        <option value="$PROJECT_DIR$/src/sagas/auth.js" />
+        <option value="$PROJECT_DIR$/src/components/AuthPage/LoginPage.jsx" />
+        <option value="$PROJECT_DIR$/src/reducers/auth.js" />
+        <option value="$PROJECT_DIR$/src/components/OrganizationPage/OrganizationModal.jsx" />
+        <option value="$PROJECT_DIR$/src/components/PartnerPage/SupplierList.jsx" />
+        <option value="$PROJECT_DIR$/src/actions/partnerActions.js" />
+        <option value="$PROJECT_DIR$/src/actions/types.js" />
+        <option value="$PROJECT_DIR$/src/components/common/Input/Input.js" />
+        <option value="$PROJECT_DIR$/src/components/common/TextField/TextField.js" />
+        <option value="$PROJECT_DIR$/src/components/common/TextField/package.json" />
+        <option value="$PROJECT_DIR$/src/components/common/Select/Select.jsx" />
+        <option value="$PROJECT_DIR$/src/reducers/partner.js" />
+        <option value="$PROJECT_DIR$/src/sagas/partner.js" />
+        <option value="$PROJECT_DIR$/src/components/PartnerPage/CustomerGroup.jsx" />
+        <option value="$PROJECT_DIR$/src/components/PartnerPage/CustomerGroupModal.jsx" />
+        <option value="$PROJECT_DIR$/src/util/helpers.js" />
+        <option value="$PROJECT_DIR$/src/components/OrganizationPage/OrganizationList.jsx" />
+        <option value="$PROJECT_DIR$/src/components/PartnerPage/PartnerPage.jsx" />
+        <option value="$PROJECT_DIR$/src/components/PartnerPage/SuppliersList.jsx" />
+        <option value="$PROJECT_DIR$/src/components/common/TextField/TextField.jsx" />
+        <option value="$PROJECT_DIR$/src/components/PartnerPage/SuppliersModal.jsx" />
+        <option value="$PROJECT_DIR$/src/components/PartnerPage/CustomerModal.jsx" />
+        <option value="$PROJECT_DIR$/src/components/PartnerPage/CustomerList.jsx" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1382" />
+    <option name="height" value="744" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="vApp_Web_X-develop" type="b2602c69:ProjectViewProjectNode" />
+              <item name="vApp_Web_X-develop" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="vApp_Web_X-develop" type="b2602c69:ProjectViewProjectNode" />
+              <item name="vApp_Web_X-develop" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="vApp_Web_X-develop" type="b2602c69:ProjectViewProjectNode" />
+              <item name="vApp_Web_X-develop" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="actions" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="vApp_Web_X-develop" type="b2602c69:ProjectViewProjectNode" />
+              <item name="vApp_Web_X-develop" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="vApp_Web_X-develop" type="b2602c69:ProjectViewProjectNode" />
+              <item name="vApp_Web_X-develop" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="AuthPage" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="vApp_Web_X-develop" type="b2602c69:ProjectViewProjectNode" />
+              <item name="vApp_Web_X-develop" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="common" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="vApp_Web_X-develop" type="b2602c69:ProjectViewProjectNode" />
+              <item name="vApp_Web_X-develop" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="common" type="462c0819:PsiDirectoryNode" />
+              <item name="Header" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="vApp_Web_X-develop" type="b2602c69:ProjectViewProjectNode" />
+              <item name="vApp_Web_X-develop" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="common" type="462c0819:PsiDirectoryNode" />
+              <item name="Modal" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="vApp_Web_X-develop" type="b2602c69:ProjectViewProjectNode" />
+              <item name="vApp_Web_X-develop" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="common" type="462c0819:PsiDirectoryNode" />
+              <item name="RctCollapsibleCard" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="vApp_Web_X-develop" type="b2602c69:ProjectViewProjectNode" />
+              <item name="vApp_Web_X-develop" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="common" type="462c0819:PsiDirectoryNode" />
+              <item name="Select" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="vApp_Web_X-develop" type="b2602c69:ProjectViewProjectNode" />
+              <item name="vApp_Web_X-develop" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="common" type="462c0819:PsiDirectoryNode" />
+              <item name="TextField" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="vApp_Web_X-develop" type="b2602c69:ProjectViewProjectNode" />
+              <item name="vApp_Web_X-develop" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="OrganizationPage" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="vApp_Web_X-develop" type="b2602c69:ProjectViewProjectNode" />
+              <item name="vApp_Web_X-develop" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="PartnerPage" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="vApp_Web_X-develop" type="b2602c69:ProjectViewProjectNode" />
+              <item name="vApp_Web_X-develop" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="reducers" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="vApp_Web_X-develop" type="b2602c69:ProjectViewProjectNode" />
+              <item name="vApp_Web_X-develop" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="sagas" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="vApp_Web_X-develop" type="b2602c69:ProjectViewProjectNode" />
+              <item name="vApp_Web_X-develop" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="store" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="vApp_Web_X-develop" type="b2602c69:ProjectViewProjectNode" />
+              <item name="vApp_Web_X-develop" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="util" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="editor.config.ad.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/components/PartnerPage" />
+    <property name="list.type.of.created.stylesheet" value="CSS" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="nodejs_package_manager_path" value="yarn" />
+    <property name="prettierjs.PrettierConfiguration.Package" value="D:\Abinvin\vApp_Web_X-develop\node_modules\prettier" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+    <property name="ts.external.directory.path" value="C:\Users\vutiendai\WebStorm 2019.1.1\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Abinvin\vApp_Web_X-develop\src\components\PartnerPage" />
+      <recent name="D:\Abinvin\vApp_Web_X-develop\src\components\common\TextField" />
+      <recent name="D:\Abinvin\vApp_Web_X-develop\src\components\common" />
+      <recent name="D:\Abinvin\vApp_Web_X-develop\src\components\common\DataTable" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Abinvin\vApp_Web_X-develop\src\assets\scss\_custom" />
+      <recent name="D:\Abinvin\vApp_Web_X-develop\src\assets\scss\custom" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration>C:\Users\vutiendai\AppData\Roaming\Subversion</configuration>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="cac18951-03b7-4be2-8641-b2859f5f6b5b" name="Default Changelist" comment="" />
+      <created>1555752670317</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1555752670317</updated>
+      <workItem from="1555752671611" duration="194000" />
+      <workItem from="1555752870054" duration="496000" />
+      <workItem from="1555810303003" duration="2535000" />
+      <workItem from="1555897288979" duration="13829000" />
+      <workItem from="1555983497663" duration="12343000" />
+      <workItem from="1556115745427" duration="1220000" />
+      <workItem from="1556156005273" duration="5532000" />
+      <workItem from="1556162261365" duration="25982000" />
+      <workItem from="1556260770223" duration="9984000" />
+      <workItem from="1556424404133" duration="755000" />
+      <workItem from="1556436419468" duration="3691000" />
+      <workItem from="1556450350230" duration="25705000" />
+      <workItem from="1556554346982" duration="4316000" />
+      <workItem from="1556592766114" duration="38776000" />
+      <workItem from="1556680115806" duration="13955000" />
+      <workItem from="1556714764801" duration="5742000" />
+      <workItem from="1556725180751" duration="592000" />
+      <workItem from="1556729471703" duration="1284000" />
+      <workItem from="1556760786271" duration="27805000" />
+      <workItem from="1556811246300" duration="79000" />
+      <workItem from="1556815448107" duration="307000" />
+      <workItem from="1556877046417" duration="10394000" />
+      <workItem from="1556962723320" duration="10728000" />
+      <workItem from="1556983712672" duration="1968000" />
+      <workItem from="1556986414392" duration="992000" />
+      <workItem from="1557028829468" duration="7971000" />
+      <workItem from="1557051013442" duration="10894000" />
+      <workItem from="1557105394038" duration="23081000" />
+      <workItem from="1557161341819" duration="15470000" />
+      <workItem from="1557233219038" duration="7371000" />
+      <workItem from="1557241768847" duration="4617000" />
+      <workItem from="1557332376670" duration="423000" />
+      <workItem from="1557365705836" duration="28555000" />
+      <workItem from="1557470781189" duration="12249000" />
+      <workItem from="1557502131092" duration="1424000" />
+      <workItem from="1557504745039" duration="6481000" />
+      <workItem from="1557550410307" duration="16837000" />
+      <workItem from="1557596113563" duration="4518000" />
+      <workItem from="1557635554028" duration="4084000" />
+      <workItem from="1557711536705" duration="19734000" />
+      <workItem from="1557797617759" duration="12590000" />
+      <workItem from="1557884822885" duration="7282000" />
+      <workItem from="1557892497216" duration="5572000" />
+      <workItem from="1557970294614" duration="13563000" />
+      <workItem from="1558074997368" duration="20123000" />
+      <workItem from="1558155348043" duration="3920000" />
+      <workItem from="1558176087437" duration="2078000" />
+      <workItem from="1558238268874" duration="11724000" />
+    </task>
+    <task id="LOCAL-00001" summary="UserModal">
+      <created>1557066340817</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1557066340817</updated>
+    </task>
+    <task id="LOCAL-00002" summary="organization List detele tra va false">
+      <created>1557111649354</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1557111649354</updated>
+    </task>
+    <task id="LOCAL-00003" summary="partner dang Edit">
+      <created>1557476906900</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1557476906900</updated>
+    </task>
+    <task id="LOCAL-00004" summary="partner xong Edit">
+      <created>1557511305728</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1557511305728</updated>
+    </task>
+    <task id="LOCAL-00005" summary="partner group xong create edit con detele">
+      <created>1557999417212</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1557999417212</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="459765000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.30729166" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="npm" order="2" side_tool="true" />
+      <window_info id="Favorites" order="3" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.3289689" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="8" />
+      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
+      <window_info anchor="bottom" id="Terminal" order="10" visible="true" weight="0.22749591" />
+      <window_info anchor="bottom" id="TypeScript" order="11" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+    </layout>
+    <layout-to-restore>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.30729166" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="npm" order="2" side_tool="true" />
+      <window_info id="Favorites" order="3" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.3289689" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="8" />
+      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
+      <window_info anchor="bottom" id="Terminal" order="10" visible="true" weight="0.22749591" />
+      <window_info anchor="bottom" id="TypeScript" order="11" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+    </layout-to-restore>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="UpdateCopyrightCheckinHandler">
+    <option name="UPDATE_COPYRIGHT" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="UserModal" />
+    <MESSAGE value="organization List detele tra va false" />
+    <MESSAGE value="partner dang Edit" />
+    <MESSAGE value="partner xong Edit" />
+    <MESSAGE value="partner group xong create edit con detele" />
+    <option name="LAST_COMMIT_MESSAGE" value="partner group xong create edit con detele" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/components/OrganizationPage/OrganizationPage.jsx</url>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/store/index.js</url>
+          <line>3</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/components/OrganizationPage/OrganizationList.jsx</url>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/components/OrganizationPage/OrganizationList.jsx</url>
+          <line>293</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/components/OrganizationPage/OrganizationList.jsx</url>
+          <line>290</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/components/OrganizationPage/OrganizationList.jsx</url>
+          <line>146</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/components/PartnerPage/CustomerGroupModal.jsx</url>
+          <line>102</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/components/PartnerPage/CustomerGroupModal.jsx</url>
+          <line>249</line>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/components/PartnerPage/CustomerGroupModal.jsx</url>
+          <line>111</line>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/components/PartnerPage/CustomerGroupModal.jsx</url>
+          <line>141</line>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/reducers/partner.js</url>
+          <line>153</line>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/components/common/Select/Select.jsx</url>
+          <line>39</line>
+          <option name="timeStamp" value="15" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/components/PartnerPage/CustomerModal.jsx</url>
+          <line>316</line>
+          <option name="timeStamp" value="16" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/components/PartnerPage/CustomerModal.jsx</url>
+          <line>317</line>
+          <option name="timeStamp" value="17" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/node_modules/@material-ui/core/Chip/Chip.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="527">
+          <caret line="32" column="14" selection-start-line="32" selection-start-column="14" selection-end-line="32" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/common/TimePicker/TimePicker.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="335">
+          <caret line="49" column="15" selection-start-line="49" selection-start-column="15" selection-end-line="49" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/Pages.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="160">
+          <caret line="19" selection-start-line="19" selection-end-line="19" />
+          <folding>
+            <element signature="e#22#62#0" expanded="true" />
+            <element signature="e#310#353#0" expanded="true" />
+            <element signature="n#!!block;n#componentWillMount#0;n#_Pages#0" />
+            <element signature="n#!!block;n#componentDidMount#0;n#_Pages#0" />
+            <element signature="n#!!block;n#componentWillUnmount#0;n#_Pages#0" />
+            <element signature="n#!!block;n#componentWillReceiveProps#0;n#_Pages#0" />
+            <element signature="e#1447#1556#0" />
+            <element signature="n#!!block;n#componentDidUpdate#0;n#_Pages#0" />
+            <element signature="n#!!block;n#renderPage#0;n#_Pages#0" />
+            <element signature="n#!!block;n#renderHeader#0;n#_Pages#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/common/Sidebar/index.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="106" column="15" selection-start-line="106" selection-start-column="15" selection-end-line="106" selection-end-column="15" />
+          <folding>
+            <element signature="e#1578#2590#0" />
+            <element signature="e#1638#2575#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/sagas/noti.js" />
+    <entry file="file://$PROJECT_DIR$/node_modules/react-notifications/lib/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" selection-start-line="5" selection-end-line="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/App.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="193">
+          <caret line="13" column="49" selection-start-line="13" selection-start-column="49" selection-end-line="13" selection-end-column="49" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/sagas/organization.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="160">
+          <caret line="223" column="12" lean-forward="true" selection-start-line="223" selection-start-column="12" selection-end-line="223" selection-end-column="12" />
+          <folding>
+            <element signature="e#0#69#0" expanded="true" />
+            <element signature="n#!!block;n#uploadFileOrg#0" />
+            <element signature="n#!!block;n#downloadFileOrgSample#0" />
+            <element signature="n#!!block;n#createUserGroup#0" />
+            <element signature="n#!!block;n#deleteUserGroup#0" />
+            <element signature="n#!!block;n#uploadFileUserGroup#0" />
+            <element signature="n#!!block;n#downloadFileUserGroupSample#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/sagas/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="75" selection-start-line="8" selection-start-column="75" selection-end-line="8" selection-end-column="75" />
+          <folding>
+            <element signature="e#0#46#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/layout/App.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-11">
+          <caret line="34" column="63" lean-forward="true" selection-start-line="34" selection-start-column="63" selection-end-line="34" selection-end-column="63" />
+          <folding>
+            <element signature="e#36#74#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/sagas/auth.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="236">
+          <caret line="14" column="69" selection-start-line="14" selection-start-column="69" selection-end-line="14" selection-end-column="69" />
+          <folding>
+            <element signature="e#0#69#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/AuthPage/LoginPage.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="25" column="50" selection-start-line="25" selection-start-column="50" selection-end-line="25" selection-end-column="50" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+            <element signature="e#206#255#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/configs.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="62" selection-start-line="6" selection-start-column="62" selection-end-line="6" selection-end-column="62" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/node-sass/lib/binding.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="4" column="4" selection-start-line="4" selection-start-column="4" selection-end-line="4" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/reducers/auth.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="32" column="23" selection-start-line="32" selection-start-column="23" selection-end-line="32" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/classnames/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="646">
+          <caret line="42" column="8" selection-start-line="42" selection-start-column="8" selection-end-line="42" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/Widgets/CampaignPerformance.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="87" column="68" selection-start-line="87" selection-start-column="68" selection-end-line="87" selection-end-column="68" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/OrganizationPage/UserList.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4845">
+          <caret line="311" column="23" selection-start-line="311" selection-start-column="23" selection-end-line="314" selection-end-column="25" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/actions/orgActions.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="23" column="13" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
+          <folding>
+            <element signature="e#0#476#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/OrganizationPage/UserGroupModal.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="80">
+          <caret line="238" column="55" selection-start-line="238" selection-start-column="50" selection-end-line="238" selection-end-column="55" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/OrganizationPage/UserModal.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="199">
+          <caret line="213" column="55" lean-forward="true" selection-start-line="213" selection-start-column="55" selection-end-line="213" selection-end-column="55" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/OrganizationPage/OrganizationModal.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2477">
+          <caret line="685" column="46" selection-start-line="685" selection-start-column="46" selection-end-line="685" selection-end-column="106" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/reducers/organization.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3298">
+          <caret line="244" column="21" selection-start-line="244" selection-start-column="21" selection-end-line="244" selection-end-column="21" />
+          <folding>
+            <element signature="e#0#1321#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/OrganizationPage/UserGroupList.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="182">
+          <caret line="200" column="11" lean-forward="true" selection-start-line="197" selection-start-column="8" selection-end-line="200" selection-end-column="11" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/OrganizationPage/OrganizationPage.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="17" column="29" selection-start-line="17" selection-start-column="29" selection-end-line="17" selection-end-column="29" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/common/Header/Header.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/common/Modal/Modal.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-307">
+          <caret line="5" column="6" selection-start-line="5" selection-start-column="6" selection-end-line="5" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/common/Select/package.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/@material-ui/core/TextField/TextField.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="407">
+          <caret line="42" column="14" selection-start-line="42" selection-start-column="14" selection-end-line="42" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/common/TextField/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="1" lean-forward="true" selection-start-line="2" selection-start-column="1" selection-end-line="2" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/actions/partnerActions.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="20" column="22" selection-start-line="20" selection-start-column="22" selection-end-line="20" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/util/api.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1054">
+          <caret line="115" column="14" selection-start-line="115" selection-start-column="14" selection-end-line="115" selection-end-column="14" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+            <element signature="n#!!block;n#request#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/actions/types.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1768">
+          <caret line="104" column="34" selection-start-line="104" selection-start-column="34" selection-end-line="104" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/PartnerPage/CustomerGroupModal.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4471">
+          <caret line="282" column="15" selection-start-line="282" selection-start-column="15" selection-end-line="282" selection-end-column="15" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/PartnerPage/CustomerGroup.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4233">
+          <caret line="274" column="24" selection-start-line="274" selection-start-column="24" selection-end-line="274" selection-end-column="24" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/common/DataTable/DataTable.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1513">
+          <caret line="92" column="21" selection-start-line="92" selection-start-column="21" selection-end-line="92" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/common/MuiTB/components/TableHead.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="935">
+          <caret line="62" column="42" selection-start-line="62" selection-start-column="42" selection-end-line="62" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/common/MuiTB/components/TableHeadCell.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2108">
+          <caret line="131" column="15" selection-start-line="131" selection-start-column="15" selection-end-line="131" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/common/Select/Select.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3009">
+          <caret line="211" column="9" selection-start-line="211" selection-start-column="9" selection-end-line="211" selection-end-column="9" />
+          <folding>
+            <element signature="n#Option#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/common/MuiTB/MUIDataTable.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="310" column="2" selection-start-line="310" selection-start-column="2" selection-end-line="310" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/util/helpers.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="108" column="45" lean-forward="true" selection-start-line="108" selection-start-column="45" selection-end-line="108" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/OrganizationPage/OrganizationList.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="326">
+          <caret line="271" column="24" selection-start-line="271" selection-start-column="24" selection-end-line="271" selection-end-column="24" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+            <element signature="e#3115#3740#0" />
+            <element signature="e#3765#4153#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/PartnerPage/PartnerPage.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="166">
+          <caret line="68" column="56" selection-start-line="68" selection-start-column="56" selection-end-line="68" selection-end-column="56" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/reducers/partner.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="383">
+          <caret line="123" column="43" selection-start-line="123" selection-start-column="43" selection-end-line="123" selection-end-column="43" />
+          <folding>
+            <element signature="e#1171#1279#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/sagas/partner.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="131">
+          <caret line="37" column="62" selection-start-line="37" selection-start-column="48" selection-end-line="37" selection-end-column="62" />
+          <folding>
+            <element signature="e#0#67#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/PartnerPage/SuppliersList.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="561">
+          <caret line="397" column="36" lean-forward="true" selection-start-line="397" selection-start-column="36" selection-end-line="397" selection-end-column="36" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/@material-ui/core/InputAdornment/InputAdornment.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="12" column="14" selection-start-line="12" selection-start-column="14" selection-end-line="12" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/common/TextField/TextField.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="268">
+          <caret line="45" column="25" lean-forward="true" selection-start-line="45" selection-start-column="25" selection-end-line="45" selection-end-column="25" />
+          <folding>
+            <element signature="e#0#56#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/PartnerPage/SuppliersModal.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="7668">
+          <caret line="555" column="30" selection-start-line="555" selection-start-column="30" selection-end-line="555" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/PartnerPage/CustomerModal.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-6692">
+          <caret line="548" column="67" selection-start-line="548" selection-start-column="67" selection-end-line="548" selection-end-column="67" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/PartnerPage/CustomerList.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="284">
+          <caret line="118" column="22" selection-start-line="118" selection-start-column="22" selection-end-line="118" selection-end-column="22" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>

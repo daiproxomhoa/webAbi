@@ -104,3 +104,58 @@ export function getAppLayout (url) {
   let path = location.split('/')
   return path[1]
 }
+
+export function getCenter(a) {
+  var arr =a.filter(v=>v!=null||v!=undefined)
+  let l = []
+  for (let i = 0; i < arr.length; i++) {
+    var distance = 0;
+    for (let j = 0; j < arr.length; j++) {
+      if (arr[i].latitude != 0 && arr[i] != 0)
+        distance += getDistance(arr[i], arr[j])
+      else
+        distance += 40000
+    }
+    l.push(distance)
+
+  }
+  var min = Math.min(...l)
+  for (let i = 0; i < l.length; i++) {
+    if (l[i] == min) {
+
+      return {lat: arr[i].latitude, lng: arr[i].longitude}
+    }
+  }
+  return {lat: 0, lng: 0}
+
+}
+
+function rad(x) {
+  return x * Math.PI / 180;
+};
+
+function getDistance(p1, p2) {
+  var R = 6371; // Earth’s mean radius in meter
+  var dLat = rad(p2.latitude - p1.latitude);
+  var dLong = rad(p2.longitude - p1.longitude);
+  var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(rad(p1.latitude)) * Math.cos(rad(p2.latitude)) *
+      Math.sin(dLong / 2) * Math.sin(dLong / 2);
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  var d = R * c;
+  return d; // returns the distance in meter
+};
+
+export  function getUnique(arr, comp) {
+
+  const unique = arr
+      .map(e => e[comp])
+
+      // store the keys of the unique objects
+      .map((e, i, final) => final.indexOf(e) === i && i)
+
+      // eliminate the dead keys & store unique objects
+      .filter(e => arr[e]).map(e => arr[e]);
+
+  return unique;
+}

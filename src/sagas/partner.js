@@ -48,8 +48,6 @@ function* listPartner({params}) {
         })
     }
 }
-
-
 function* createCustomer({params}) {
     console.log(params)
     try {
@@ -69,7 +67,6 @@ function* createCustomer({params}) {
 }
 
 function* updateCustomer({params}) {
-    console.log(params)
     try {
         // Get Org
         const response = yield call(Api.Post, '/customers/create', params)
@@ -109,7 +106,9 @@ function* listCustomerGroup({params, option}) {
         yield put({
             type: LIST_CUSTOMER_GROUP_SUCCESS,
             data: response.data,
-            option: option
+            totalLength:response.totalLength,
+            option: option,
+            params
         })
     } catch (error) {
         yield put({

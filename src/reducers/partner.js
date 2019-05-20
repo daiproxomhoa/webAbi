@@ -57,7 +57,7 @@ const INIT_STATE = {
             status: '',
             error: ''
         },
-        read:{
+        read: {
             data: [],
             status: '',
             error: ''
@@ -122,7 +122,6 @@ export default (state = INIT_STATE, action) => {
             }
         }
         case LIST_CUSTOMER_GROUP_SUCCESS: {
-
             if (action.option == 'single') {
                 return {
                     ...state,
@@ -130,9 +129,10 @@ export default (state = INIT_STATE, action) => {
                         ...state.customerGroup,
                         list: {
                             ...state.customerGroup.list,
-                            data_single: action.data,
+                            data_single: action.data || [],
                             status: STATUS_SUCCESS
-                        }
+                        },
+                        totalLength: action.totalLength
                     }
                 }
             } else {
@@ -142,10 +142,12 @@ export default (state = INIT_STATE, action) => {
                         ...state.customerGroup,
                         list: {
                             ...state.customerGroup.list,
-                            data: action.data,
+                            data: action.data || [],
                             status: STATUS_SUCCESS
-                        }
+                        },
+                        totalLength: action.totalLength
                     }
+
                 }
             }
         }
@@ -172,17 +174,17 @@ export default (state = INIT_STATE, action) => {
             }
         }
         case READ_CUSTOMER_GROUP_SUCCESS: {
-                return {
-                    ...state,
-                    customerGroup: {
-                        ...state.customerGroup,
-                        read: {
-                            ...state.customerGroup.read,
-                            data: action.data,
-                            status: STATUS_SUCCESS
-                        }
+            return {
+                ...state,
+                customerGroup: {
+                    ...state.customerGroup,
+                    read: {
+                        ...state.customerGroup.read,
+                        data: action.data,
+                        status: STATUS_SUCCESS
                     }
                 }
+            }
         }
         case READ_CUSTOMER_GROUP_ERROR: {
             return {
@@ -296,7 +298,7 @@ export default (state = INIT_STATE, action) => {
                 }
             }
         }
-        case UPDATE_CUSTOMER_GROUP_ERROR:{
+        case UPDATE_CUSTOMER_GROUP_ERROR: {
             NotificationManager.warning('Update  customer group false', 'Warning');
             return {
                 ...state,
@@ -332,7 +334,7 @@ export default (state = INIT_STATE, action) => {
                 }
             }
         }
-        case CREATE_CUSTOMER_GROUP_ERROR:{
+        case CREATE_CUSTOMER_GROUP_ERROR: {
             NotificationManager.warning('Create  customer group false', 'Warning');
             return {
                 ...state,

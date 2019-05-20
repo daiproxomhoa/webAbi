@@ -23,12 +23,12 @@ import {
 } from '../../actions'
 import {getCookie} from "../../util/helpers";
 import OrganizationModal from "../OrganizationPage/OrganizationModal";
-import CustomerModal from "./CustomerModal";
+import SuppliersModal from "./SuppliersModal";
 import UserModal from "../OrganizationPage/UserModal";
 import Button from "@material-ui/core/Button";
 import {GoogleMap, Marker, withGoogleMap, withScriptjs} from "react-google-maps";
 
-class CustomerList extends Component {
+class SuppliersList extends Component {
     static propTypes = {
         listPartnerFunc: PropTypes.func.isRequired,
         updatePartnerFunc: PropTypes.func.isRequired,
@@ -67,7 +67,7 @@ class CustomerList extends Component {
     componentDidMount() {
         const {listOrgFunc, listCustomerGroupFunc} = this.props
         const {currentPage, pageLimit, user} = this.state
-        this.fetchCustomer()
+        this.fetchSupplier()
         listOrgFunc({
             categoryIds: [],
             currentPage: 1,
@@ -78,7 +78,8 @@ class CustomerList extends Component {
         listCustomerGroupFunc({
             currentPage: 1,
             organizationIds: user.organizationIds,
-            pageLimit: 1000
+            pageLimit: 1000,
+            species: "SUPPLIERS"
         }, 'all')
 
     }
@@ -88,12 +89,12 @@ class CustomerList extends Component {
         const {status, user} = nextProps
         if ((checkLoad == true) && status[st] == STATUS_SUCCESS) {
             this.setState({checkLoad: false}, () => {
-                this.fetchCustomer()
+                this.fetchSupplier()
             })
         }
     }
 
-    fetchCustomer = () => {
+    fetchSupplier = () => {
         console.log('Load')
         const {listPartnerFunc} = this.props
         const {filter, currentPage, pageLimit, user} = this.state
@@ -116,10 +117,9 @@ class CustomerList extends Component {
         listPartnerFunc({
             currentPage: currentPage + 1,
             pageLimit: pageLimit,
-            orderBy: {},
-            customerType: "1",
-            customerGroup: [],
+            orderBy: {createdAt: 1},
             organizationIds: user.organizationIds,
+            species: "SUPPLIERS",
             ...options
         })
     }
@@ -193,11 +193,11 @@ class CustomerList extends Component {
             label: org.groupName
         })).reverse()
         const columns = [
-            {name: 'Customer Code', options: {filter: true, styles: {maxWidth: '10'}}},
-            {name: 'Customer Name', options: {filter: true}},
+            {name: 'Supplier Code', options: {filter: true, styles: {maxWidth: '10'}}},
+            {name: 'Supplier Name', options: {filter: true}},
             {name: 'Email', options: {filter: false, sort: false}},
             {name: 'Mobile Mumber', options: {filter: false, sort: false}},
-            {name: 'Customer Group', options: {filter: false, sort: false}},
+            {name: 'Supplier Group', options: {filter: false, sort: false}},
             {name: 'Province'},
             {name: 'Address', options: {filter: false, sort: false}},
             {name: 'Option', options: {filter: false, sort: false}}
@@ -246,7 +246,7 @@ class CustomerList extends Component {
         return (
             <div className='user-group-list'>
                 <div className='filter-search m-t-xs m-b-md'>
-                    <form onSubmit={() => this.fetchCustomer()}>
+                    <form onSubmit={() => this.fetchSupplier()}>
                         <div className='row'>
                             <div className='col-md-2 col-sm-4 earch'>
                                 <TextField
@@ -261,7 +261,7 @@ class CustomerList extends Component {
                                                 ...filter,
                                                 keyword: e.target.value
                                             }
-                                        }, this.fetchCustomer)
+                                        }, this.fetchSupplier)
                                     }
                                 />
                             </div>
@@ -280,7 +280,7 @@ class CustomerList extends Component {
                                                     organization: value
                                                 }
                                             },
-                                            this.fetchCustomer
+                                            this.fetchSupplier
                                         )
                                     }
                                     // onChangeText={e =>
@@ -294,11 +294,11 @@ class CustomerList extends Component {
                                     // }
                                 />
                             </div>
-                            <div className='col-md-2 col-sm-4 filter-organization'>
+                            <div className='col-md-2 col-sm-4 filter-organization' >
                                 <Select
                                     isMulti={true}
-                                    placeholder='Customer group'
-                                    // label='Customer group'
+                                    placeholder='Supplier group'
+                                    // label='Supplier group'
                                     value={filter.customerGroup || ''}
                                     options={customerGroupOptions}
                                     onChange={value =>
@@ -310,7 +310,7 @@ class CustomerList extends Component {
                                                     customerGroup: value
                                                 }
                                             },
-                                            this.fetchCustomer
+                                            this.fetchSupplier
                                         )
                                     }
                                 />
@@ -359,13 +359,13 @@ class CustomerList extends Component {
                         // loading={status.list === STATUS_LOADING}
                         onChangeRowsPerPage={number =>
                             this.setState({pageLimit: number}, () => {
-                                this.fetchCustomer()
+                                this.fetchSupplier()
                             })
                         }
                         onChangePage={
                             number => {
                                 this.setState({currentPage: number}, () => {
-                                    this.fetchCustomer()
+                                    this.fetchSupplier()
                                 })
                             }
                         }
@@ -381,7 +381,7 @@ class CustomerList extends Component {
                     </div>
                 }
                 {modal.create && (
-                    <CustomerModal
+                    <SuppliersModal
                         heading='Create Organization'
                         open={modal.create}
                         organizations={orgOptions}
@@ -396,7 +396,7 @@ class CustomerList extends Component {
                         }
                     />
                 )}{modal.update && (
-                <CustomerModal
+                <SuppliersModal
                     heading='Update Organization'
                     open={modal.update}
                     organizations={orgOptions}
@@ -457,4 +457,4 @@ export default connect(
         listOrgFunc: params => dispatch(listOrganization(params)),
         listCustomerGroupFunc: (params, option) => dispatch(listCustomerGroup(params, option))
     })
-)(CustomerList)
+)(SuppliersList)
